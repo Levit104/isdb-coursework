@@ -2,8 +2,10 @@ package levit104.isdb.coursework.controllers;
 
 import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Client;
+import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.services.ClientsService;
-import levit104.isdb.coursework.validation.ClientValidator;
+import levit104.isdb.coursework.services.RepairmenService;
+import levit104.isdb.coursework.validation.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,13 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-    private final ClientValidator clientValidator;
+    private final PersonValidator personValidator;
     private final ClientsService clientsService;
+    private final RepairmenService repairmenService;
 
     @Autowired
-    public AuthController(ClientValidator clientValidator, ClientsService clientsService) {
-        this.clientValidator = clientValidator;
+    public AuthController(PersonValidator personValidator, ClientsService clientsService, RepairmenService repairmenService) {
+        this.personValidator = personValidator;
         this.clientsService = clientsService;
+        this.repairmenService = repairmenService;
     }
 
     @GetMapping("/login")
@@ -29,19 +33,35 @@ public class AuthController {
         return "auth/login";
     }
 
-    @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("client") Client client) {
-        return "auth/registration";
+    @GetMapping("/registration/client")
+    public String registrationPageClient(@ModelAttribute("client") Client client) {
+        return "auth/registration/client";
     }
 
-    @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("client") @Valid Client client,
-                                      BindingResult bindingResult) {
-        System.out.println("ABOBA2");
-        clientValidator.validate(client, bindingResult);
-        if (bindingResult.hasErrors())
-            return "/auth/registration";
+    @PostMapping("/registration/client")
+    public String registrationActionClient(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
+        System.out.println("ABOBA_CLIENT_REG");
+        // TODO даункаст???
+        personValidator.validate(client, bindingResult);
+        if (bindingResult.hasErrors()) return "auth/registration/client";
         clientsService.register(client);
         return "redirect:/auth/login";
     }
+
+    @GetMapping("/registration/repairman")
+    public String registrationPageRepairman(@ModelAttribute("repairman") Repairman repairman) {
+        return "auth/registration/repairman";
+    }
+
+    @PostMapping("/registration/repairman")
+    public String registrationActionRepairman(@ModelAttribute("repairman") @Valid Repairman repairman, BindingResult bindingResult) {
+        System.out.println("ABOBA_REPAIRMAN_REG");
+        // TODO даункаст???
+        personValidator.validate(repairman, bindingResult);
+        if (bindingResult.hasErrors()) return "auth/registration/repairman";
+        repairmenService.register(repairman);
+        return "redirect:/auth/login";
+    }
+
+
 }

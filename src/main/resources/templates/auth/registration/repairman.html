@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/auth/registration/repairman}" th:object="${repairman}">
+    <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+    <label for="firstName">Введите имя: </label>
+    <input type="text" th:field="*{firstName}" id="firstName"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+    <label for="lastName">Введите фамилию: </label>
+    <input type="text" th:field="*{lastName}" id="lastName"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    <label for="email">Введите адрес эл. почты: </label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('telNumber')}" th:errors="*{telNumber}"></div>
+    <label for="telNumber">Введите номер телефона: </label>
+    <input type="text" th:field="*{telNumber}" id="telNumber"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></div>
+    <label for="experience">Введите опыт работы: </label>
+    <input type="text" th:field="*{experience}" id="experience"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('qualification')}" th:errors="*{qualification}"></div>
+    <label for="qualification">Введите квалификацию: </label>
+    <input type="text" th:field="*{qualification}" id="qualification"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    <label for="username">Введите имя пользователя: </label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <label for="password">Введите пароль: </label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <br/>
+
+    <input type="submit" value="Зарегистрироваться"/>
+</form>
+
+</body>
+</html>

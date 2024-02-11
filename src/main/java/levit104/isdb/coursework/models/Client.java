@@ -15,7 +15,7 @@ import static levit104.isdb.coursework.validation.ErrorMessages.NOT_BLANK;
 @Setter
 @ToString(callSuper = true)
 public class Client extends Person {
-//    @NotNull
+    //    @NotNull
     @NotBlank(message = NOT_BLANK)
     private String address;
 }

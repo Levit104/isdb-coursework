@@ -15,23 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
-                        .anyRequest().hasAnyRole("USER_CLIENT")
-                )
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/auth/login")
-                        .loginProcessingUrl("/process_login")
-                        .defaultSuccessUrl("/index", true)
-                        .failureUrl("/auth/login?error")
-                )
+        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/error").permitAll().requestMatchers("/clients/**").hasAnyRole("USER_CLIENT").requestMatchers("/repairmen/**").hasAnyRole("USER_REPAIRMAN").anyRequest().authenticated()).formLogin(formLogin -> formLogin.loginPage("/auth/login").loginProcessingUrl("/process_login").defaultSuccessUrl("/", true).failureUrl("/auth/login?error"))
 //                .formLogin(form -> form.permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/auth/login")
-                );
+                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/auth/login"));
 
         return http.build();
     }
