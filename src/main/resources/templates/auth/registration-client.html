@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/auth/registration/repairman}" th:object="${repairman}">
+<form th:method="POST" th:action="@{/auth/registration-client}" th:object="${client}">
     <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
     <label for="firstName">Введите имя: </label>
     <input type="text" th:field="*{firstName}" id="firstName"/>
@@ -32,14 +32,9 @@
     <input type="text" th:field="*{telNumber}" id="telNumber"/>
     <br/>
 
-    <div class="error" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></div>
-    <label for="experience">Введите опыт работы: </label>
-    <input type="text" th:field="*{experience}" id="experience"/>
-    <br/>
-
-    <div class="error" th:if="${#fields.hasErrors('qualification')}" th:errors="*{qualification}"></div>
-    <label for="qualification">Введите квалификацию: </label>
-    <input type="text" th:field="*{qualification}" id="qualification"/>
+    <div class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+    <label for="address">Введите адрес: </label>
+    <input type="text" th:field="*{address}" id="address"/>
     <br/>
 
     <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>

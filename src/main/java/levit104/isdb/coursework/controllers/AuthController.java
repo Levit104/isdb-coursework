@@ -33,30 +33,32 @@ public class AuthController {
         return "auth/login";
     }
 
-    @GetMapping("/registration/client")
+    @GetMapping("/registration-client")
     public String registrationPageClient(@ModelAttribute("client") Client client) {
-        return "auth/registration/client";
+        return "auth/registration-client";
     }
 
-    @PostMapping("/registration/client")
+    @PostMapping("/registration-client")
     public String registrationActionClient(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
         System.out.println("ABOBA_CLIENT_REG");
         personValidator.validate(client, bindingResult);
-        if (bindingResult.hasErrors()) return "auth/registration/client";
+        if (bindingResult.hasErrors())
+            return "auth/registration-client";
         clientsService.register(client);
         return "redirect:/auth/login";
     }
 
-    @GetMapping("/registration/repairman")
+    @GetMapping("/registration-repairman")
     public String registrationPageRepairman(@ModelAttribute("repairman") Repairman repairman) {
-        return "auth/registration/repairman";
+        return "auth/registration-repairman";
     }
 
-    @PostMapping("/registration/repairman")
+    @PostMapping("/registration-repairman")
     public String registrationActionRepairman(@ModelAttribute("repairman") @Valid Repairman repairman, BindingResult bindingResult) {
         System.out.println("ABOBA_REPAIRMAN_REG");
         personValidator.validate(repairman, bindingResult);
-        if (bindingResult.hasErrors()) return "auth/registration/repairman";
+        if (bindingResult.hasErrors())
+            return "auth/registration-repairman";
         repairmenService.register(repairman);
         return "redirect:/auth/login";
     }
