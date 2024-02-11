@@ -7,8 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional(readOnly = true)
 public class RepairmenService {
@@ -19,18 +17,6 @@ public class RepairmenService {
     public RepairmenService(RepairmenRepository repairmenRepository, PasswordEncoder passwordEncoder) {
         this.repairmenRepository = repairmenRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    public Optional<Repairman> findByEmail(String email) {
-        return repairmenRepository.findByEmail(email);
-    }
-
-    public Optional<Repairman> findByTelNumber(String telNumber) {
-        return repairmenRepository.findByTelNumber(telNumber);
-    }
-
-    public Optional<Repairman> findByUsername(String username) {
-        return repairmenRepository.findByUsername(username);
     }
 
     @Transactional

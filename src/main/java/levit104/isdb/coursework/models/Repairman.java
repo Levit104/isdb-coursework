@@ -16,8 +16,8 @@ import static levit104.isdb.coursework.validation.ErrorMessages.NOT_BLANK;
 @Setter
 @ToString(callSuper = true)
 public class Repairman extends Person {
-
     private double rating;
+
     @NotNull(message = NOT_BLANK)
     private Byte experience;
 

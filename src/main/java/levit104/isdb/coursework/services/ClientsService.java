@@ -7,8 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional(readOnly = true)
 public class ClientsService {
@@ -19,18 +17,6 @@ public class ClientsService {
     public ClientsService(ClientsRepository clientsRepository, PasswordEncoder passwordEncoder) {
         this.clientsRepository = clientsRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    public Optional<Client> findByEmail(String email) {
-        return clientsRepository.findByEmail(email);
-    }
-
-    public Optional<Client> findByTelNumber(String telNumber) {
-        return clientsRepository.findByTelNumber(telNumber);
-    }
-
-    public Optional<Client> findByUsername(String username) {
-        return clientsRepository.findByUsername(username);
     }
 
     @Transactional
