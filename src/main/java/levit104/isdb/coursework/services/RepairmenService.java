@@ -2,14 +2,13 @@ package levit104.isdb.coursework.services;
 
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.repos.RepairmenRepository;
+import levit104.isdb.coursework.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static levit104.isdb.coursework.security.SecurityUtils.ROLE_USER_REPAIRMAN;
 
 @Service
 @Transactional(readOnly = true)
@@ -50,7 +49,7 @@ public class RepairmenService {
 
     private void save(Repairman repairman) {
         repairman.setPassword(passwordEncoder.encode(repairman.getPassword()));
-        repairman.setRole(ROLE_USER_REPAIRMAN);
+        repairman.setRole(SecurityUtils.ROLE_USER_REPAIRMAN);
         repairmenRepository.save(repairman);
     }
 }

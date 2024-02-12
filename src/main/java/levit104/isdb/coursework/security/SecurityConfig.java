@@ -23,8 +23,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/auth/**").anonymous()
-                        .requestMatchers("/clients/**").hasAnyRole("USER_CLIENT")
-                        .requestMatchers("/repairmen/**").hasAnyRole("USER_REPAIRMAN")
+                        .requestMatchers("/clients/**").hasAuthority(SecurityUtils.ROLE_USER_CLIENT)
+                        .requestMatchers("/repairmen/**").hasAuthority(SecurityUtils.ROLE_USER_REPAIRMAN)
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

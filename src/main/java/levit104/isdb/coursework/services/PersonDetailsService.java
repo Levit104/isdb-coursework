@@ -27,8 +27,6 @@ public class PersonDetailsService implements UserDetailsService {
         if (person.isPresent())
             return new PersonDetails(person.get());
 
-        String userNotFound = "Пользователь " + username + " не найден";
-        System.out.println(userNotFound);
-        throw new UsernameNotFoundException(userNotFound);
+        throw new UsernameNotFoundException("Пользователь " + username + " не найден");
     }
 }
