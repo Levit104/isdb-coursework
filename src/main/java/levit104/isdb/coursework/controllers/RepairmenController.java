@@ -5,12 +5,11 @@ import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.services.RepairmenService;
 import levit104.isdb.coursework.validation.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import static levit104.isdb.coursework.security.SecurityUtils.getAuthenticatedPerson;
 
 @Controller
 @RequestMapping("/repairmen")
@@ -26,47 +25,40 @@ public class RepairmenController {
 
     @GetMapping
     public String showAll(Model model) {
-        System.out.println("ABOBA_SHOW_ALL");
         model.addAttribute("repairmen", repairmenService.findAll());
         return "repairmen/index";
     }
 
+    @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        System.out.println("ABOBA_SHOW_ONE, id= " + id);
         model.addAttribute("repairman", repairmenService.findById(id));
         return "repairmen/id";
     }
 
+    @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") int id, Model model) {
-        System.out.println("ABOBA_EDIT_FORM, id= " + id);
         model.addAttribute("repairman", repairmenService.findById(id));
         return "repairmen/edit";
     }
 
+    @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @PatchMapping("/{id}")
     public String edit(@PathVariable("id") int id,
                        @ModelAttribute("repairman") @Valid Repairman repairman,
                        BindingResult bindingResult) {
-        System.out.println("ABOBA_EDIT, id= " + id);
         personValidator.validate(repairman, bindingResult);
         if (bindingResult.hasErrors())
             return "repairmen/edit";
         repairmenService.updateById(id, repairman);
         return "redirect:/repairmen/{id}";
     }
+
+    @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        System.out.println("ABOBA_DELETE, id= " + id);
         repairmenService.deleteById(id);
         return "redirect:/repairmen";
-    }
-
-    @GetMapping("/log-info")
-    public String logInfo() {
-        Repairman repairman = (Repairman) getAuthenticatedPerson();
-        System.out.println(repairman);
-        return "redirect:/repairmen/" + repairman.getId();
     }
 }

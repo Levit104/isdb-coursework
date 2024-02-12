@@ -19,8 +19,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        System.out.println("ABOBA_SUCCESS_LOGIN");
-
         int personId = getAuthenticatedPerson(authentication).getId();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         String url = authorities.stream()

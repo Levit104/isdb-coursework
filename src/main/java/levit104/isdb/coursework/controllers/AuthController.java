@@ -45,7 +45,6 @@ public class AuthController {
 
     @PostMapping("/registration-client")
     public String registrationActionClient(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
-        System.out.println("ABOBA_CLIENT_REG");
         personValidator.validate(client, bindingResult);
         if (bindingResult.hasErrors())
             return "auth/registration-client";
@@ -60,7 +59,6 @@ public class AuthController {
 
     @PostMapping("/registration-repairman")
     public String registrationActionRepairman(@ModelAttribute("repairman") @Valid Repairman repairman, BindingResult bindingResult) {
-        System.out.println("ABOBA_REPAIRMAN_REG");
         personValidator.validate(repairman, bindingResult);
         if (bindingResult.hasErrors())
             return "auth/registration-repairman";

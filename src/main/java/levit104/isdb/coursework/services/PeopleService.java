@@ -8,10 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static levit104.isdb.coursework.security.SecurityUtils.getAuthenticatedPerson;
+
 @Service
 @Transactional(readOnly = true)
 public class PeopleService {
     private final PeopleRepository peopleRepository;
+
+    public boolean hasCorrectId(int id) {
+        return id == getAuthenticatedPerson().getId();
+    }
 
     @Autowired
     public PeopleService(PeopleRepository peopleRepository) {
