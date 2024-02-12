@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtils {
     public static final String ROLE_USER_CLIENT = "ROLE_USER_CLIENT";
+    public static final String ROLE_USER_REPAIRMAN = "ROLE_USER_REPAIRMAN";
 
     public static Person getAuthenticatedPerson() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

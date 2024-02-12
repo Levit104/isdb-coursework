@@ -11,6 +11,7 @@
 <p th:text="${client.getEmail()}"></p>
 <p th:text="${client.getTelNumber()}"></p>
 <p th:text="${client.getUsername()}"></p>
+<p th:text="${client.getAddress()}"></p>
 
 <form th:method="GET" th:action="@{/clients/{id}/edit(id=${client.getId()})}">
     <input type="submit" value="Редактировать">

@@ -33,6 +33,11 @@ public class AuthController {
         return "auth/login";
     }
 
+    @GetMapping("/registration")
+    public String registrationPage() {
+        return "auth/registration";
+    }
+
     @GetMapping("/registration-client")
     public String registrationPageClient(@ModelAttribute("client") Client client) {
         return "auth/registration-client";
