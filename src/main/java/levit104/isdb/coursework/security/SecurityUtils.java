@@ -10,6 +10,10 @@ public class SecurityUtils {
 
     public static Person getAuthenticatedPerson() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return getAuthenticatedPerson(authentication);
+    }
+
+    public static Person getAuthenticatedPerson(Authentication authentication) {
         PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
         return personDetails.getPerson();
     }
