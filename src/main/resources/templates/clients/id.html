@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+
+<p th:text="${client.getId()}"></p>
+<p th:text="${client.getFirstName() + ' ' + client.getLastName()}"></p>
+<p th:text="${client.getEmail()}"></p>
+<p th:text="${client.getTelNumber()}"></p>
+<p th:text="${client.getUsername()}"></p>
+
+<form th:method="GET" th:action="@{/clients/{id}/edit(id=${client.getId()})}">
+    <input type="submit" value="Редактировать">
+</form>
+
+<form th:method="DELETE" th:action="@{/clients/{id}(id=${client.getId()})}">
+    <input type="submit" value="Удалить">
+</form>
+
+<br>
+<hr>
+<a href="/clients">Список клиентов</a>
+
+<br>
+<hr>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Выйти из аккаунта" />
+</form>
+
+</body>
+</html>

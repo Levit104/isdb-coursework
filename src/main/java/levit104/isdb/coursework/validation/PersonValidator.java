@@ -30,16 +30,17 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
         Optional<Person> personFromDB;
 
+        // проверки ID нужны для корректной работы обновления профиля
         personFromDB = peopleService.findByEmail(person.getEmail());
-        if (personFromDB.isPresent())
+        if (personFromDB.isPresent() && person.getId() != personFromDB.get().getId())
             errors.rejectValue("email", "", EMAIL_TAKEN);
 
         personFromDB = peopleService.findByTelNumber(person.getTelNumber());
-        if (personFromDB.isPresent())
+        if (personFromDB.isPresent() && person.getId() != personFromDB.get().getId())
             errors.rejectValue("telNumber", "", TEL_NUMBER_TAKEN);
 
         personFromDB = peopleService.findByUsername(person.getUsername());
-        if (personFromDB.isPresent())
+        if (personFromDB.isPresent() && person.getId() != personFromDB.get().getId())
             errors.rejectValue("username", "", USERNAME_TAKEN);
     }
 }

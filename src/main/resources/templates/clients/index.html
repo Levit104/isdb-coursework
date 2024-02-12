@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список клиентов</title>
+</head>
+<body>
+
+<p>Список клиентов</p>
+<div th:each="client : ${clients}">
+    <a th:href="@{/clients/{id}(id=${client.getId()})}"
+       th:text="${client.getFirstName() + ' ' + client.getLastName()}"></a>
+</div>
+
+<br>
+<hr>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Выйти из аккаунта" />
+</form>
+
+</body>
+</html>
