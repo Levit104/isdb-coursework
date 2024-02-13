@@ -1,5 +1,6 @@
 package levit104.isdb.coursework.services;
 
+import levit104.isdb.coursework.exceptions.PersonNotFoundException;
 import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.repos.ClientsRepository;
 import levit104.isdb.coursework.security.SecurityUtils;
@@ -26,9 +27,10 @@ public class ClientsService {
         return clientsRepository.findAll();
     }
 
-    // TODO throw Exception
     public Client findById(int id) {
-        return clientsRepository.findById(id).orElse(null);
+        return clientsRepository
+                .findById(id)
+                .orElseThrow(() -> new PersonNotFoundException("Пользователь с id=" + id + " не найден"));
     }
 
     @Transactional
