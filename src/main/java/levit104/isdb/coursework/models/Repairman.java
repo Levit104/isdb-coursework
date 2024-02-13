@@ -1,12 +1,13 @@
 package levit104.isdb.coursework.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 import static levit104.isdb.coursework.validation.ErrorMessages.NOT_BLANK;
 
@@ -23,4 +24,12 @@ public class Repairman extends Person {
 
     @NotBlank(message = NOT_BLANK)
     private String qualification;
+
+    @ManyToMany
+    @JoinTable(
+            name = "schedule",
+            joinColumns = @JoinColumn(name = "repairman_id"),
+            inverseJoinColumns = @JoinColumn(name = "day_id")
+    )
+    private List<Day> days;
 }

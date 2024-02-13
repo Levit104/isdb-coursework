@@ -1,6 +1,7 @@
 package levit104.isdb.coursework.services;
 
 import levit104.isdb.coursework.exceptions.PersonNotFoundException;
+import levit104.isdb.coursework.models.Day;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.repos.RepairmenRepository;
 import levit104.isdb.coursework.security.SecurityUtils;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,9 +36,9 @@ public class RepairmenService {
     }
 
     @Transactional
-    public void updateById(int id, Repairman updated) {
+    public void updateById(int id, Repairman updated, List<Integer> selectedDaysIds) {
         updated.setId(id);
-        save(updated);
+        register(updated, selectedDaysIds);
     }
 
     @Transactional
@@ -45,13 +47,30 @@ public class RepairmenService {
     }
 
     @Transactional
-    public void register(Repairman repairman) {
-        save(repairman);
+    public void save(Repairman repairman, List<Integer> selectedDaysIds) {
+        register(repairman, selectedDaysIds);
     }
 
-    private void save(Repairman repairman) {
+    private void register(Repairman repairman, List<Integer> selectedDaysIds) {
         repairman.setPassword(passwordEncoder.encode(repairman.getPassword()));
         repairman.setRole(SecurityUtils.ROLE_USER_REPAIRMAN);
+        repairman.setDays(selectedDaysIds.stream().map(selectedId -> {
+            Day day = new Day();
+            day.setId(selectedId);
+            return day;
+        }).collect(Collectors.toList()));
         repairmenRepository.save(repairman);
     }
+
+    public List<Day> getSchedule(int id) {
+        return findById(id).getDays();
+    }
+
+    public List<Integer> getScheduleIds(int id) {
+        return getSchedule(id)
+                .stream()
+                .map(Day::getId)
+                .collect(Collectors.toList());
+    }
+
 }

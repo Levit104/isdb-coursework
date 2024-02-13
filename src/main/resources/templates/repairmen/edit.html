@@ -52,6 +52,16 @@
     <input type="password" th:field="*{password}" id="password"/>
     <br/>
 
+    <p>Рабочий график:</p>
+    <div class="error" th:if="${#fields.hasErrors('days')}" th:errors="*{days}"></div>
+    <div th:each="day : ${days}">
+        <input type="checkbox" th:name="selectedDays" th:id="'day_' + ${day.id}" th:value="${day.id}"
+               th:checked="${scheduleIds.contains(day.id)}">
+        <label th:for="'day_' + ${day.id}" th:text="${day.fullName}"></label>
+        <br>
+    </div>
+    <br>
+
     <input type="submit" value="Обновить"/>
 </form>
 

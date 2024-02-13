@@ -36,7 +36,7 @@ public class ClientsService {
     @Transactional
     public void updateById(int id, Client updated) {
         updated.setId(id);
-        save(updated);
+        register(updated);
     }
 
     @Transactional
@@ -45,11 +45,11 @@ public class ClientsService {
     }
 
     @Transactional
-    public void register(Client client) {
-        save(client);
+    public void save(Client client) {
+        register(client);
     }
 
-    private void save(Client client) {
+    private void register(Client client) {
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         client.setRole(SecurityUtils.ROLE_USER_CLIENT);
         clientsRepository.save(client);
