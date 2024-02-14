@@ -1,13 +1,12 @@
 package levit104.isdb.coursework.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import static levit104.isdb.coursework.validation.ErrorMessages.INVALID_EMAIL;
-import static levit104.isdb.coursework.validation.ErrorMessages.NOT_BLANK;
 
 @Entity
 @Table(name = "person")
@@ -20,32 +19,26 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     private String firstName;
 
-    //    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     private String lastName;
 
-    //    @NotNull
-    @NotBlank(message = NOT_BLANK)
-    @Email(message = INVALID_EMAIL)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Email(message = ErrorMessages.INVALID_EMAIL)
     @Column(unique = true)
     private String email;
 
-    //    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     @Column(unique = true)
     private String telNumber;
 
-    //    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     @Column(unique = true)
     private String username;
 
-    //    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     private String password;
 
     private String role;

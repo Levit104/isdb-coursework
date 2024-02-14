@@ -3,13 +3,12 @@ package levit104.isdb.coursework.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-
-import static levit104.isdb.coursework.validation.ErrorMessages.NOT_BLANK;
 
 @Entity
 @Table(name = "repairman")
@@ -19,10 +18,10 @@ import static levit104.isdb.coursework.validation.ErrorMessages.NOT_BLANK;
 public class Repairman extends Person {
     private double rating;
 
-    @NotNull(message = NOT_BLANK)
+    @NotNull(message = ErrorMessages.EMPTY_VALUE)
     private Byte experience;
 
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     private String qualification;
 
     @ManyToMany
