@@ -1,6 +1,6 @@
 package levit104.isdb.coursework.services;
 
-import levit104.isdb.coursework.exceptions.PersonNotFoundException;
+import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.Day;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.repos.RepairmenRepository;
@@ -32,7 +32,7 @@ public class RepairmenService {
     public Repairman findById(int id) {
         return repairmenRepository
                 .findById(id)
-                .orElseThrow(() -> new PersonNotFoundException("Пользователь с id=" + id + " не найден"));
+                .orElseThrow(() -> new EntityNotFoundException("Пользователь с id=" + id + " не найден"));
     }
 
     @Transactional
