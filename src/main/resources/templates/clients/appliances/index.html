@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваша техника</title>
+</head>
+<body>
+
+<p>Ваша техника</p>
+<div th:each="appliance : ${appliances}">
+    <a th:href="@{/clients/{clientId}/appliances/{applianceId}(clientId=${clientId}, applianceId=${appliance.id})}" th:text="${appliance.name}"></a>
+</div>
+
+</body>
+</html>

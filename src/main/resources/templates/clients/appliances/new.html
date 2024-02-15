@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить прибор</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<form th:method="POST" th:action="@{/clients/{clientId}/appliances(clientId=${clientId})}" th:object="${appliance}">
+    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <label for="name">Введите название: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}"></div>
+    <label for="purchaseDate">Введите дату покупки: </label>
+    <input type="date" th:field="*{purchaseDate}" id="purchaseDate"/>
+    <br/>
+
+    <div class="error" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+    <a th:href="@{/clients/{clientId}/appliances/types/new(clientId=${clientId})}">Добавить тип</a>
+    <br>
+    <label for="type">Тип техники: </label>
+    <select id="type" th:field="*{type}">
+        <option th:each="type : ${applianceTypes}" th:value="${type.id}" th:text="${type.name}"></option>
+    </select>
+    <br>
+
+    <input type="submit" value="Добавить"/>
+</form>
+
+</body>
+</html>

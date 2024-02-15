@@ -1,25 +1,26 @@
 package levit104.isdb.coursework.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
 @Entity
-@Table(name = "client")
+@Table(name = "appliance_type")
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class Client extends Person {
-    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
-    private String address;
+public class ApplianceType {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @OneToMany(mappedBy = "owner")
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Column(unique = true, nullable = false)
+    private String name;
+
+    @OneToMany(mappedBy = "type")
     private List<Appliance> appliances;
 }
