@@ -52,7 +52,7 @@ public class RepairmenController {
     public String editForm(@PathVariable("id") int id, Model model) {
         model.addAttribute("repairman", repairmenService.findById(id));
         model.addAttribute("days", daysService.findAll());
-        model.addAttribute("scheduleIds", repairmenService.getScheduleIds(id));
+        model.addAttribute("scheduleIds", daysService.getDaysIds(id));
         return "repairmen/edit";
     }
 
@@ -67,7 +67,7 @@ public class RepairmenController {
         scheduleValidator.validate(selectedDaysIds, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("days", daysService.findAll());
-            model.addAttribute("scheduleIds", repairmenService.getScheduleIds(id));
+            model.addAttribute("scheduleIds", daysService.getDaysIds(id));
             return "repairmen/edit";
         }
         repairmenService.updateById(id, repairman, selectedDaysIds);

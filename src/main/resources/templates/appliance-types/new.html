@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Добавить тип прибора</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/clients/{clientId}/appliances/types(clientId=${clientId})}" th:object="${applianceType}">
+<form th:method="POST" th:action="@{/appliance-types}" th:object="${applianceType}">
     <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     <label for="name">Название: </label>
     <input type="text" id="name" th:field="*{name}">

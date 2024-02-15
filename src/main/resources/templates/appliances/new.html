@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Добавить прибор</title>
@@ -22,8 +22,6 @@
     <br/>
 
     <div class="error" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
-    <a th:href="@{/clients/{clientId}/appliances/types/new(clientId=${clientId})}">Добавить тип</a>
-    <br>
     <label for="type">Тип техники: </label>
     <select id="type" th:field="*{type}">
         <option th:each="type : ${applianceTypes}" th:value="${type.id}" th:text="${type.name}"></option>
