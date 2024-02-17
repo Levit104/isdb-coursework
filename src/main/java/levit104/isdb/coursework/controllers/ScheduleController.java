@@ -2,7 +2,7 @@ package levit104.isdb.coursework.controllers;
 
 import levit104.isdb.coursework.services.DaysService;
 import levit104.isdb.coursework.validation.ErrorMessages;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +11,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/repairmen/{repairmanId}/schedule")
+@RequiredArgsConstructor
 // TODO PreAuthorize
 public class ScheduleController {
     private final DaysService daysService;
-
-    @Autowired
-    public ScheduleController(DaysService daysService) {
-        this.daysService = daysService;
-    }
 
     @GetMapping
     public String show(@PathVariable("repairmanId") int repairmanId, Model model) {

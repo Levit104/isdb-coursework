@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Appliance;
 import levit104.isdb.coursework.services.ApplianceTypesService;
 import levit104.isdb.coursework.services.AppliancesService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +14,10 @@ import org.springframework.web.bind.annotation.*;
 // TODO Проверка даты (меньше текущей)
 @Controller
 @RequestMapping("/clients/{clientId}/appliances")
+@RequiredArgsConstructor
 public class AppliancesController {
     private final AppliancesService appliancesService;
     private final ApplianceTypesService applianceTypesService;
-
-    @Autowired
-    public AppliancesController(AppliancesService appliancesService, ApplianceTypesService applianceTypesService) {
-        this.appliancesService = appliancesService;
-        this.applianceTypesService = applianceTypesService;
-    }
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @GetMapping

@@ -6,26 +6,18 @@ import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.services.ClientsService;
 import levit104.isdb.coursework.services.RepairmenService;
 import levit104.isdb.coursework.validation.PersonValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
     private final PersonValidator personValidator;
     private final ClientsService clientsService;
     private final RepairmenService repairmenService;
-
-    @Autowired
-    public AuthController(PersonValidator personValidator,
-                          ClientsService clientsService,
-                          RepairmenService repairmenService) {
-        this.personValidator = personValidator;
-        this.clientsService = clientsService;
-        this.repairmenService = repairmenService;
-    }
 
     @GetMapping("/login")
     public String loginPage() {

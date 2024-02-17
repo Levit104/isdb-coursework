@@ -4,7 +4,7 @@ import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.Appliance;
 import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.repos.AppliancesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,15 +12,10 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AppliancesService {
     private final AppliancesRepository appliancesRepository;
     private final ClientsService clientsService;
-
-    @Autowired
-    public AppliancesService(AppliancesRepository appliancesRepository, ClientsService clientsService) {
-        this.appliancesRepository = appliancesRepository;
-        this.clientsService = clientsService;
-    }
 
     public List<Appliance> findAllByOwnerId(int ownerId) {
         return appliancesRepository.findAllByOwnerId(ownerId);
@@ -42,9 +37,7 @@ public class AppliancesService {
     @Transactional
     public void updateById(int id, Appliance appliance, int ownerId) {
         appliance.setId(id);
-        Client owner = clientsService.findById(ownerId);
-        appliance.setOwner(owner);
-        appliancesRepository.save(appliance);
+        save(appliance, ownerId);
     }
 
     @Transactional

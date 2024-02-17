@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.services.ClientsService;
 import levit104.isdb.coursework.validation.PersonValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/clients")
+@RequiredArgsConstructor
 public class ClientsController {
     private final PersonValidator personValidator;
     private final ClientsService clientsService;
-
-    @Autowired
-    public ClientsController(PersonValidator personValidator, ClientsService clientsService) {
-        this.personValidator = personValidator;
-        this.clientsService = clientsService;
-    }
 
     @GetMapping
     public String showAll(Model model) {

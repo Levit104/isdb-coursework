@@ -3,7 +3,7 @@ package levit104.isdb.coursework.services;
 import levit104.isdb.coursework.models.Day;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.repos.DaysRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,15 +12,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class DaysService {
     private final DaysRepository daysRepository;
     private final RepairmenService repairmenService;
-
-    @Autowired
-    public DaysService(DaysRepository daysRepository, RepairmenService repairmenService) {
-        this.daysRepository = daysRepository;
-        this.repairmenService = repairmenService;
-    }
 
     public List<Day> findAll() {
         return daysRepository.findAll();

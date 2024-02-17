@@ -4,7 +4,7 @@ import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.repos.ClientsRepository;
 import levit104.isdb.coursework.security.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,15 +13,10 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ClientsService {
     private final ClientsRepository clientsRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public ClientsService(ClientsRepository clientsRepository, PasswordEncoder passwordEncoder) {
-        this.clientsRepository = clientsRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public List<Client> findAll() {
         return clientsRepository.findAll();
@@ -36,7 +31,7 @@ public class ClientsService {
     @Transactional
     public void updateById(int id, Client updated) {
         updated.setId(id);
-        register(updated);
+        save(updated);
     }
 
     @Transactional
@@ -46,10 +41,6 @@ public class ClientsService {
 
     @Transactional
     public void save(Client client) {
-        register(client);
-    }
-
-    private void register(Client client) {
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         client.setRole(SecurityUtils.ROLE_USER_CLIENT);
         clientsRepository.save(client);

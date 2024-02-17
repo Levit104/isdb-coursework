@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.services.RepairmenService;
 import levit104.isdb.coursework.validation.PersonValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/repairmen")
+@RequiredArgsConstructor
 public class RepairmenController {
     private final PersonValidator personValidator;
     private final RepairmenService repairmenService;
-
-    @Autowired
-    public RepairmenController(PersonValidator personValidator, RepairmenService repairmenService) {
-        this.personValidator = personValidator;
-        this.repairmenService = repairmenService;
-    }
 
     @GetMapping
     public String showAll(Model model) {
