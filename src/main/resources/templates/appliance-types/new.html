@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Добавить тип прибора</title>
+    <title>Добавить тип техники</title>
 </head>
 <body>
 <form th:method="POST" th:action="@{/appliance-types}" th:object="${applianceType}">
@@ -11,7 +11,7 @@
     <input type="text" id="name" th:field="*{name}">
     <br>
 
-    <button type="submit">Добавить тип прибора</button>
+    <input type="submit" value="Добавить">
 </form>
 
 </body>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Рабочий график</title>
+</head>
+<body>
+
+<div th:each="day : ${schedule}">
+    <span th:text="${day.fullName}"></span>
+</div>
+
+<br>
+<form th:method="GET" th:action="@{'/repairmen/' + ${repairmanId} + '/schedule/edit'}">
+    <input type="submit" value="Обновить">
+</form>
+
+<br>
+<a th:href="@{'/repairmen/' + ${repairmanId}}">Вернуться в профиль</a>
+
+</body>
+</html>

@@ -11,13 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/*
-TODO:
-    1. Проверка даты (меньше текущей)
-    3. Удаление прибора
-    4. Проверка уникальности типа
- */
-
+// TODO Проверка даты (меньше текущей)
 @Controller
 @RequestMapping("/clients/{clientId}/appliances")
 public class AppliancesController {
@@ -44,6 +38,7 @@ public class AppliancesController {
     public String show(@PathVariable("clientId") int clientId,
                        @PathVariable("applianceId") int applianceId,
                        Model model) {
+        model.addAttribute("clientId", clientId);
         model.addAttribute("appliance", appliancesService.findById(applianceId));
         return "appliances/id";
     }
@@ -69,6 +64,41 @@ public class AppliancesController {
             return "appliances/new";
         }
         appliancesService.save(appliance, clientId);
+        return "redirect:/clients/{clientId}/appliances";
+    }
+
+    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
+    @GetMapping("/{applianceId}/edit")
+    public String editForm(@PathVariable("clientId") int clientId,
+                           @PathVariable("applianceId") int applianceId,
+                           Model model) {
+        model.addAttribute("clientId", clientId);
+        model.addAttribute("appliance", appliancesService.findById(applianceId));
+        model.addAttribute("applianceTypes", applianceTypesService.findAll());
+        return "appliances/edit";
+    }
+
+    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
+    @PatchMapping("/{applianceId}")
+    public String edit(@PathVariable("clientId") int clientId,
+                       @PathVariable("applianceId") int applianceId,
+                       @ModelAttribute("appliance") @Valid Appliance appliance,
+                       BindingResult bindingResult,
+                       Model model) {
+        if (bindingResult.hasErrors()) {
+            appliance.setId(applianceId); // FIXME почему здесь это надо, а у клиентов/мастеров нет???
+            model.addAttribute("applianceTypes", applianceTypesService.findAll());
+            return "appliances/edit";
+        }
+        appliancesService.updateById(applianceId, appliance, clientId);
+        return "redirect:/clients/{clientId}/appliances/{applianceId}";
+    }
+
+    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
+    @DeleteMapping("/{applianceId}")
+    public String delete(@PathVariable("clientId") int clientId,
+                         @PathVariable("applianceId") int applianceId) {
+        appliancesService.deleteById(applianceId);
         return "redirect:/clients/{clientId}/appliances";
     }
 }

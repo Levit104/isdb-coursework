@@ -6,34 +6,31 @@
 </head>
 <body>
 
-<p th:text="${repairman.getId()}"></p>
-<p th:text="${repairman.getFirstName() + ' ' + repairman.getLastName()}"></p>
-<p th:text="${repairman.getEmail()}"></p>
-<p th:text="${repairman.getTelNumber()}"></p>
-<p th:text="${repairman.getUsername()}"></p>
-<p th:text="${repairman.getExperience()}"></p>
-<p th:text="${repairman.getQualification()}"></p>
-<p th:text="${repairman.getRating()}"></p>
-<p>Рабочий график</p>
-<p th:each="day : ${repairman.getDays()}" th:text="${day.fullName}"></p>
+<div>
+    <p th:text="${repairman.id}"></p>
+    <p th:text="${repairman.firstName + ' ' + repairman.lastName}"></p>
+    <p th:text="${repairman.email}"></p>
+    <p th:text="${repairman.telNumber}"></p>
+    <p th:text="${repairman.username}"></p>
+    <p th:text="${repairman.experience}"></p>
+    <p th:text="${repairman.qualification}"></p>
+    <p th:text="${repairman.rating}"></p>
+</div>
 
-
-<form th:method="GET" th:action="@{/repairmen/{id}/edit(id=${repairman.getId()})}">
-    <input type="submit" value="Редактировать">
+<form th:method="GET" th:action="@{'/repairmen/' + ${repairman.id} + '/schedule'}">
+    <input type="submit" value="Рабочий график">
 </form>
-
-<form th:method="DELETE" th:action="@{/repairmen/{id}(id=${repairman.getId()})}">
+<br>
+<form th:method="GET" th:action="@{'/repairmen/' + ${repairman.id} + '/edit'}">
+    <input type="submit" value="Обновить">
+</form>
+<br>
+<form th:method="DELETE" th:action="@{'/repairmen/' + ${repairman.id}}">
     <input type="submit" value="Удалить">
 </form>
-
 <br>
-<hr>
-<a href="/repairmen">Список мастеров</a>
-
-<br>
-<hr>
 <form th:method="POST" th:action="@{/logout}">
-    <input type="submit" value="Выйти из аккаунта" />
+    <input type="submit" value="Выйти из аккаунта">
 </form>
 
 </body>

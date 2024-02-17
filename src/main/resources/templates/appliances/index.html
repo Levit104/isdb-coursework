@@ -6,10 +6,14 @@
 </head>
 <body>
 
-<p>Ваша техника</p>
 <div th:each="appliance : ${appliances}">
-    <a th:href="@{/clients/{clientId}/appliances/{applianceId}(clientId=${clientId}, applianceId=${appliance.id})}" th:text="${appliance.name}"></a>
+    <a th:href="@{'/clients/' + ${clientId} + '/appliances/' + ${appliance.id}}" th:text="${appliance.name}"></a>
 </div>
+
+<br>
+<a th:href="@{'/clients/' + ${clientId} + '/appliances/new'}">Добавить технику</a>
+<br>
+<a th:href="@{'/clients/' + ${clientId}}">Вернуться в профиль</a>
 
 </body>
 </html>

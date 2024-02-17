@@ -2,14 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Прибор</title>
+    <title>Техника</title>
 </head>
 <body>
 
-<p th:text="${appliance.id}"></p>
-<p th:text="${appliance.name}"></p>
-<p th:text="${appliance.purchaseDate}"></p>
-<p th:text="${appliance.type.name}"></p>
+<div>
+    <p th:text="${appliance.id}"></p>
+    <p th:text="${appliance.name}"></p>
+    <p th:text="${appliance.purchaseDate}"></p>
+    <p th:text="${appliance.type.name}"></p>
+</div>
+
+<form th:method="GET" th:action="@{'/clients/' + ${clientId} + '/appliances/' + ${appliance.id} + '/edit'}">
+    <input type="submit" value="Обновить">
+</form>
+<br>
+
+<form th:method="DELETE" th:action="@{'/clients/' + ${clientId} + '/appliances/' + ${appliance.id}}">
+    <input type="submit" value="Удалить">
+</form>
+<br>
+<form th:method="GET" th:action="@{'/clients/' + ${clientId} + '/appliances'}">
+    <input type="submit" value="Список техники">
+</form>
+<br>
+<form th:method="GET" th:action="@{'/clients/' + ${clientId}}">
+    <input type="submit" value="Вернуться в профиль">
+</form>
 
 </body>
 </html>

@@ -11,52 +11,47 @@
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{/clients/{id}(id=${client.getId()})}" th:object="${client}">
+<form th:method="PATCH" th:action="@{'/clients/' + ${client.id}}" th:object="${client}">
     <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
-    <label for="firstName">Введите имя: </label>
-    <input type="text" th:field="*{firstName}" id="firstName"/>
-    <br/>
+    <label for="firstName">Имя: </label>
+    <input type="text" id="firstName" th:field="*{firstName}">
+    <br>
 
     <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
-    <label for="lastName">Введите фамилию: </label>
-    <input type="text" th:field="*{lastName}" id="lastName"/>
-    <br/>
+    <label for="lastName">Фамилия: </label>
+    <input type="text" id="lastName" th:field="*{lastName}">
+    <br>
 
     <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-    <label for="email">Введите адрес эл. почты: </label>
-    <input type="text" th:field="*{email}" id="email"/>
-    <br/>
+    <label for="email">Адрес эл. почты: </label>
+    <input type="email" id="email" th:field="*{email}">
+    <br>
 
     <div class="error" th:if="${#fields.hasErrors('telNumber')}" th:errors="*{telNumber}"></div>
-    <label for="telNumber">Введите номер телефона: </label>
-    <input type="text" th:field="*{telNumber}" id="telNumber"/>
-    <br/>
+    <label for="telNumber">Номер телефона: </label>
+    <input type="text" id="telNumber" th:field="*{telNumber}">
+    <br>
 
     <div class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
-    <label for="address">Введите адрес: </label>
-    <input type="text" th:field="*{address}" id="address"/>
-    <br/>
+    <label for="address">Адрес: </label>
+    <input type="text" id="address" th:field="*{address}">
+    <br>
 
     <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-    <label for="username">Введите имя пользователя: </label>
-    <input type="text" th:field="*{username}" id="username"/>
-    <br/>
+    <label for="username">Имя пользователя: </label>
+    <input type="text" id="username" th:field="*{username}">
+    <br>
 
     <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-    <label for="password">Введите пароль: </label>
-    <input type="password" th:field="*{password}" id="password"/>
-    <br/>
+    <label for="password">Пароль: </label>
+    <input type="password" id="password" th:field="*{password}">
+    <br>
 
-    <input type="submit" value="Обновить"/>
+    <input type="submit" value="Обновить">
 </form>
 
 <br>
-<hr>
-<a href="/clients">Список клиентов</a>
-
-<br>
-<hr>
-<a th:href="@{/clients/{id}(id=${client.getId()})}">Вернуться в профиль</a>
+<a th:href="@{'/clients/' + ${client.id}}">Вернуться в профиль</a>
 
 </body>
 </html>

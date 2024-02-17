@@ -6,29 +6,29 @@
 </head>
 <body>
 
-<p th:text="${client.getId()}"></p>
-<p th:text="${client.getFirstName() + ' ' + client.getLastName()}"></p>
-<p th:text="${client.getEmail()}"></p>
-<p th:text="${client.getTelNumber()}"></p>
-<p th:text="${client.getUsername()}"></p>
-<p th:text="${client.getAddress()}"></p>
+<div>
+    <p th:text="${client.id}"></p>
+    <p th:text="${client.firstName + ' ' + client.lastName}"></p>
+    <p th:text="${client.email}"></p>
+    <p th:text="${client.telNumber}"></p>
+    <p th:text="${client.username}"></p>
+    <p th:text="${client.address}"></p>
+</div>
 
-<form th:method="GET" th:action="@{/clients/{id}/edit(id=${client.getId()})}">
-    <input type="submit" value="Редактировать">
+<form th:method="GET" th:action="@{'/clients/' + ${client.id} + '/appliances'}">
+    <input type="submit" value="Ваша техника">
 </form>
-
-<form th:method="DELETE" th:action="@{/clients/{id}(id=${client.getId()})}">
+<br>
+<form th:method="GET" th:action="@{'/clients/' + ${client.id} + '/edit'}">
+    <input type="submit" value="Обновить">
+</form>
+<br>
+<form th:method="DELETE" th:action="@{'/clients/' + ${client.id}}">
     <input type="submit" value="Удалить">
 </form>
-
 <br>
-<hr>
-<a href="/clients">Список клиентов</a>
-
-<br>
-<hr>
 <form th:method="POST" th:action="@{/logout}">
-    <input type="submit" value="Выйти из аккаунта" />
+    <input type="submit" value="Выйти из аккаунта">
 </form>
 
 </body>

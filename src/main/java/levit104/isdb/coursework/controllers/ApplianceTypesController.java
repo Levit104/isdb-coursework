@@ -30,6 +30,7 @@ public class ApplianceTypesController {
         return "appliance-types/new";
     }
 
+    // TODO unique
     @PostMapping
     public String addApplianceType(@ModelAttribute("applianceType") @Valid ApplianceType applianceType,
                                    BindingResult bindingResult) {

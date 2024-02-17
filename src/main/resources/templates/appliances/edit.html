@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Добавить технику</title>
+    <title>Обновить данные о технике</title>
     <style>
         .error {
             color: red;
@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{'/clients/' + ${clientId} + '/appliances'}" th:object="${appliance}">
+<form th:method="PATCH" th:action="@{'/clients/' + ${clientId} + '/appliances/' + ${appliance.id}}" th:object="${appliance}">
     <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     <label for="name">Название: </label>
     <input type="text" id="name" th:field="*{name}">
@@ -29,7 +29,7 @@
     </select>
     <br>
 
-    <input type="submit" value="Добавить">
+    <input type="submit" value="Обновить">
 </form>
 
 </body>

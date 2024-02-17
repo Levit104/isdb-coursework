@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Рабочий график</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/repairmen/{repairmanId}/schedule(repairmanId=${repairmanId})}">
+    <div class="error" th:if="${scheduleError}" th:text="${scheduleError}"></div>
+    <span>Рабочие дни: </span>
+    <div th:each="day : ${days}">
+        <input type="checkbox" th:name="selectedDaysIds" th:id="'day_' + ${day.id}" th:value="${day.id}"
+               th:checked="${scheduleIds != null and scheduleIds.contains(day.id)}">
+        <label th:for="'day_' + ${day.id}" th:text="${day.fullName}"></label>
+        <br>
+    </div>
+    <br>
+
+    <input type="submit" value="Сохранить"/>
+</form>
+
+</body>
+</html>

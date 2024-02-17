@@ -2,21 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Список мастеров</title>
+    <title>Мастера</title>
 </head>
 <body>
 
-<p>Список мастеров</p>
 <div th:each="repairman : ${repairmen}">
-    <a th:href="@{/repairmen/{id}(id=${repairman.getId()})}"
-       th:text="${repairman.getFirstName() + ' ' + repairman.getLastName()}"></a>
+    <a th:href="@{'/repairmen/' + ${repairman.id}}"
+       th:text="${repairman.firstName + ' ' + repairman.lastName}"></a>
 </div>
-
-<br>
-<hr>
-<form th:method="POST" th:action="@{/logout}">
-    <input type="submit" value="Выйти из аккаунта" />
-</form>
 
 </body>
 </html>

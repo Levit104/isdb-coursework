@@ -1,6 +1,7 @@
 package levit104.isdb.coursework.services;
 
 import levit104.isdb.coursework.models.Day;
+import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.repos.DaysRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class DaysService {
     private final DaysRepository daysRepository;
+    private final RepairmenService repairmenService;
 
     @Autowired
-    public DaysService(DaysRepository daysRepository) {
+    public DaysService(DaysRepository daysRepository, RepairmenService repairmenService) {
         this.daysRepository = daysRepository;
+        this.repairmenService = repairmenService;
     }
 
     public List<Day> findAll() {
@@ -32,5 +35,20 @@ public class DaysService {
                 .stream()
                 .map(Day::getId)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void saveSchedule(int repairmanId, List<Integer> selectedDaysIds) {
+        Repairman repairman = repairmenService.findById(repairmanId);
+        List<Day> days = convertDaysIdsToDays(selectedDaysIds);
+        repairman.setDays(days);
+    }
+
+    private List<Day> convertDaysIdsToDays(List<Integer> daysIds) {
+        return daysIds.stream().map(dayId -> {
+            Day day = new Day();
+            day.setId(dayId);
+            return day;
+        }).collect(Collectors.toList());
     }
 }
