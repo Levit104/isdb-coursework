@@ -1,5 +1,6 @@
 package levit104.isdb.coursework.security;
 
+import levit104.isdb.coursework.util.SecurityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,7 +38,8 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/auth/login")
-                );
+                )
+        ;
 
         return http.build();
     }

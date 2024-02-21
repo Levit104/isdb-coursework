@@ -15,7 +15,7 @@ import java.util.List;
 public class ApplianceType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     @Column(unique = true, nullable = false)

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface AppliancesRepository extends JpaRepository<Appliance, Integer> {
-    List<Appliance> findAllByOwnerId(int id);
+    List<Appliance> findAllByOwnerId(Integer id);
 }

@@ -26,21 +26,21 @@ public class ClientsController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("client", clientsService.findById(id));
         return "clients/id";
     }
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") int id, Model model) {
+    public String editForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("client", clientsService.findById(id));
         return "clients/edit";
     }
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @PatchMapping("/{id}")
-    public String edit(@PathVariable("id") int id,
+    public String edit(@PathVariable("id") Integer id,
                        @ModelAttribute("client") @Valid Client client,
                        BindingResult bindingResult) {
         personValidator.validate(client, bindingResult);
@@ -52,7 +52,7 @@ public class ClientsController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") Integer id) {
         clientsService.deleteById(id);
         return "redirect:/clients";
     }

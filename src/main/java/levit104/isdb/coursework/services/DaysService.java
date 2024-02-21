@@ -21,11 +21,11 @@ public class DaysService {
         return daysRepository.findAll();
     }
 
-    public List<Day> findAllByRepairmanId(int repairmanId) {
+    public List<Day> findAllByRepairmanId(Integer repairmanId) {
         return daysRepository.findAllByRepairmen_Id(repairmanId);
     }
 
-    public List<Integer> getDaysIds(int repairmanId) {
+    public List<Integer> getDaysIds(Integer repairmanId) {
         return findAllByRepairmanId(repairmanId)
                 .stream()
                 .map(Day::getId)
@@ -33,7 +33,7 @@ public class DaysService {
     }
 
     @Transactional
-    public void saveSchedule(int repairmanId, List<Integer> selectedDaysIds) {
+    public void saveSchedule(Integer repairmanId, List<Integer> selectedDaysIds) {
         Repairman repairman = repairmenService.findById(repairmanId);
         List<Day> days = convertDaysIdsToDays(selectedDaysIds);
         repairman.setDays(days);

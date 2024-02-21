@@ -26,21 +26,21 @@ public class RepairmenController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("repairman", repairmenService.findById(id));
         return "repairmen/id";
     }
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") int id, Model model) {
+    public String editForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("repairman", repairmenService.findById(id));
         return "repairmen/edit";
     }
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @PatchMapping("/{id}")
-    public String edit(@PathVariable("id") int id,
+    public String edit(@PathVariable("id") Integer id,
                        @ModelAttribute("repairman") @Valid Repairman repairman,
                        BindingResult bindingResult) {
         personValidator.validate(repairman, bindingResult);
@@ -52,7 +52,7 @@ public class RepairmenController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#id)")
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") Integer id) {
         repairmenService.deleteById(id);
         return "redirect:/repairmen";
     }

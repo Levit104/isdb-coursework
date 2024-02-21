@@ -17,13 +17,13 @@ public class ScheduleController {
     private final DaysService daysService;
 
     @GetMapping
-    public String show(@PathVariable("repairmanId") int repairmanId, Model model) {
+    public String show(@PathVariable("repairmanId") Integer repairmanId, Model model) {
         model.addAttribute("schedule", daysService.findAllByRepairmanId(repairmanId));
         return "schedule/index";
     }
 
     @GetMapping("/edit")
-    public String editForm(@PathVariable("repairmanId") int repairmanId, Model model) {
+    public String editForm(@PathVariable("repairmanId") Integer repairmanId, Model model) {
         model.addAttribute("repairmanId", repairmanId);
         model.addAttribute("days", daysService.findAll());
         model.addAttribute("scheduleIds", daysService.getDaysIds(repairmanId));
@@ -31,7 +31,7 @@ public class ScheduleController {
     }
 
     @PostMapping
-    public String edit(@PathVariable("repairmanId") int repairmanId,
+    public String edit(@PathVariable("repairmanId") Integer repairmanId,
                        @RequestParam(value = "selectedDaysIds", required = false) List<Integer> selectedDaysIds,
                        Model model) {
         if (selectedDaysIds == null) {

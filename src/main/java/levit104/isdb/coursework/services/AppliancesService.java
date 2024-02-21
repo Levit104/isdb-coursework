@@ -17,31 +17,31 @@ public class AppliancesService {
     private final AppliancesRepository appliancesRepository;
     private final ClientsService clientsService;
 
-    public List<Appliance> findAllByOwnerId(int ownerId) {
+    public List<Appliance> findAllByOwnerId(Integer ownerId) {
         return appliancesRepository.findAllByOwnerId(ownerId);
     }
 
-    public Appliance findById(int id) {
+    public Appliance findById(Integer id) {
         return appliancesRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Техника с id=" + id + " не найдена"));
     }
 
     @Transactional
-    public void save(Appliance appliance, int ownerId) {
+    public void save(Appliance appliance, Integer ownerId) {
         Client owner = clientsService.findById(ownerId);
         appliance.setOwner(owner);
         appliancesRepository.save(appliance);
     }
 
     @Transactional
-    public void updateById(int id, Appliance appliance, int ownerId) {
+    public void updateById(Integer id, Appliance appliance, Integer ownerId) {
         appliance.setId(id);
         save(appliance, ownerId);
     }
 
     @Transactional
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         appliancesRepository.deleteById(id);
     }
 }

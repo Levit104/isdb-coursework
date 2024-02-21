@@ -19,9 +19,11 @@ public class Repairman extends Person {
     private double rating;
 
     @NotNull(message = ErrorMessages.EMPTY_VALUE)
+    @Column(nullable = false)
     private Byte experience;
 
     @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Column(nullable = false)
     private String qualification;
 
     @ManyToMany

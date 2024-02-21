@@ -3,7 +3,7 @@ package levit104.isdb.coursework.services;
 import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.repos.RepairmenRepository;
-import levit104.isdb.coursework.security.SecurityUtils;
+import levit104.isdb.coursework.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,20 +22,20 @@ public class RepairmenService {
         return repairmenRepository.findAll();
     }
 
-    public Repairman findById(int id) {
+    public Repairman findById(Integer id) {
         return repairmenRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Пользователь с id=" + id + " не найден"));
     }
 
     @Transactional
-    public void updateById(int id, Repairman updated) {
+    public void updateById(Integer id, Repairman updated) {
         updated.setId(id);
         save(updated);
     }
 
     @Transactional
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         repairmenRepository.deleteById(id);
     }
 

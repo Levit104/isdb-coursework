@@ -21,7 +21,7 @@ public class AppliancesController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @GetMapping
-    public String showAll(@PathVariable("clientId") int clientId,
+    public String showAll(@PathVariable("clientId") Integer clientId,
                           Model model) {
         model.addAttribute("clientId", clientId);
         model.addAttribute("appliances", appliancesService.findAllByOwnerId(clientId));
@@ -30,8 +30,8 @@ public class AppliancesController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @GetMapping("/{applianceId}")
-    public String show(@PathVariable("clientId") int clientId,
-                       @PathVariable("applianceId") int applianceId,
+    public String show(@PathVariable("clientId") Integer clientId,
+                       @PathVariable("applianceId") Integer applianceId,
                        Model model) {
         model.addAttribute("clientId", clientId);
         model.addAttribute("appliance", appliancesService.findById(applianceId));
@@ -40,7 +40,7 @@ public class AppliancesController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @GetMapping("/new")
-    public String addForm(@PathVariable("clientId") int clientId,
+    public String addForm(@PathVariable("clientId") Integer clientId,
                           @ModelAttribute("appliance") Appliance appliance,
                           Model model) {
         model.addAttribute("clientId", clientId);
@@ -50,7 +50,7 @@ public class AppliancesController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @PostMapping
-    public String add(@PathVariable("clientId") int clientId,
+    public String add(@PathVariable("clientId") Integer clientId,
                       @ModelAttribute("appliance") @Valid Appliance appliance,
                       BindingResult bindingResult,
                       Model model) {
@@ -64,8 +64,8 @@ public class AppliancesController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @GetMapping("/{applianceId}/edit")
-    public String editForm(@PathVariable("clientId") int clientId,
-                           @PathVariable("applianceId") int applianceId,
+    public String editForm(@PathVariable("clientId") Integer clientId,
+                           @PathVariable("applianceId") Integer applianceId,
                            Model model) {
         model.addAttribute("clientId", clientId);
         model.addAttribute("appliance", appliancesService.findById(applianceId));
@@ -75,8 +75,8 @@ public class AppliancesController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @PatchMapping("/{applianceId}")
-    public String edit(@PathVariable("clientId") int clientId,
-                       @PathVariable("applianceId") int applianceId,
+    public String edit(@PathVariable("clientId") Integer clientId,
+                       @PathVariable("applianceId") Integer applianceId,
                        @ModelAttribute("appliance") @Valid Appliance appliance,
                        BindingResult bindingResult,
                        Model model) {
@@ -91,8 +91,8 @@ public class AppliancesController {
 
     @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @DeleteMapping("/{applianceId}")
-    public String delete(@PathVariable("clientId") int clientId,
-                         @PathVariable("applianceId") int applianceId) {
+    public String delete(@PathVariable("clientId") Integer clientId,
+                         @PathVariable("applianceId") Integer applianceId) {
         appliancesService.deleteById(applianceId);
         return "redirect:/clients/{clientId}/appliances";
     }

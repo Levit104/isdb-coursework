@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DaysRepository extends JpaRepository<Day, Integer> {
-    List<Day> findAllByRepairmen_Id(int repairmanId);
+    List<Day> findAllByRepairmen_Id(Integer repairmanId);
 }
