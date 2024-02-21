@@ -29,12 +29,10 @@ public class Appliance {
     private LocalDate purchaseDate;
 
     @NotNull(message = ErrorMessages.EMPTY_VALUE)
-    @Column(nullable = false) // TODO ???
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private ApplianceType type;
 
-    @Column(nullable = false) // TODO ???
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private Client owner;
