@@ -20,22 +20,22 @@ public class AuthController {
     private final RepairmenService repairmenService;
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginForm() {
         return "auth/login";
     }
 
     @GetMapping("/registration")
-    public String registrationPage() {
+    public String registrationLinks() {
         return "auth/registration";
     }
 
     @GetMapping("/registration-client")
-    public String registrationPageClient(@ModelAttribute("client") Client client) {
+    public String registrationFormClient(@ModelAttribute("client") Client client) {
         return "auth/registration-client";
     }
 
     @PostMapping("/registration-client")
-    public String registrationActionClient(@ModelAttribute("client") @Valid Client client,
+    public String registrationClient(@ModelAttribute("client") @Valid Client client,
                                            BindingResult bindingResult) {
         personValidator.validate(client, bindingResult);
         if (bindingResult.hasErrors())
@@ -45,12 +45,12 @@ public class AuthController {
     }
 
     @GetMapping("/registration-repairman")
-    public String registrationPageRepairman(@ModelAttribute("repairman") Repairman repairman) {
+    public String registrationFormRepairman(@ModelAttribute("repairman") Repairman repairman) {
         return "auth/registration-repairman";
     }
 
     @PostMapping("/registration-repairman")
-    public String registrationActionRepairman(@ModelAttribute("repairman") @Valid Repairman repairman,
+    public String registrationRepairman(@ModelAttribute("repairman") @Valid Repairman repairman,
                                               BindingResult bindingResult) {
         personValidator.validate(repairman, bindingResult);
         if (bindingResult.hasErrors())
