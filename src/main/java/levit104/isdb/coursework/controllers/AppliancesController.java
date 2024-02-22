@@ -13,8 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-// TODO
-//  Проверка, что это правильный пользователь
+// TODO Проверка, что это правильный пользователь
 @Controller
 @RequestMapping("/appliances")
 @RequiredArgsConstructor
@@ -30,8 +29,7 @@ public class AppliancesController {
 
     @GetMapping
     public String showAll(Model model) {
-        Integer ownerId = authenticatedClient().getId();
-        model.addAttribute("appliances", appliancesService.findAllByOwnerId(ownerId));
+        model.addAttribute("appliances", appliancesService.findAllByOwnerId(authenticatedClient().getId()));
         return "appliances/index";
     }
 
@@ -51,8 +49,7 @@ public class AppliancesController {
     public String add(@ModelAttribute("appliance") @Valid Appliance appliance,
                       BindingResult bindingResult,
                       Model model) {
-        Client client = authenticatedClient();
-        appliance.setOwner(client);
+        appliance.setOwner(authenticatedClient());
         applianceValidator.validate(appliance, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -76,8 +73,7 @@ public class AppliancesController {
                        @ModelAttribute("appliance") @Valid Appliance appliance,
                        BindingResult bindingResult,
                        Model model) {
-        Client client = authenticatedClient();
-        appliance.setOwner(client);
+        appliance.setOwner(authenticatedClient());
         applianceValidator.validate(appliance, bindingResult);
 
         if (bindingResult.hasErrors()) {

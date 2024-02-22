@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/repairmen/{repairmanId}/schedule(repairmanId=${repairmanId})}">
+<form th:method="PUT" th:action="@{/schedule}">
     <div class="error" th:if="${scheduleError}" th:text="${scheduleError}"></div>
     <span>Рабочие дни: </span>
     <div th:each="day : ${days}">

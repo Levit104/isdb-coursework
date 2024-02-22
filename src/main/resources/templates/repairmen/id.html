@@ -17,7 +17,7 @@
     <p th:text="${repairman.rating}"></p>
 </div>
 
-<form th:method="GET" th:action="@{'/repairmen/' + ${repairman.id} + '/schedule'}">
+<form th:method="GET" th:action="@{/schedule}">
     <input type="submit" value="Рабочий график">
 </form>
 <br>
