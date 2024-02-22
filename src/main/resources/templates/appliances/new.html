@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{'/clients/' + ${clientId} + '/appliances'}" th:object="${appliance}">
+<form th:method="POST" th:action="@{/appliances}" th:object="${appliance}">
     <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     <label for="name">Название: </label>
     <input type="text" id="name" th:field="*{name}">

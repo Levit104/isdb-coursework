@@ -2,98 +2,96 @@ package levit104.isdb.coursework.controllers;
 
 import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Appliance;
+import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.services.ApplianceTypesService;
 import levit104.isdb.coursework.services.AppliancesService;
+import levit104.isdb.coursework.util.SecurityUtils;
+import levit104.isdb.coursework.validation.ApplianceValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-// TODO Проверка даты (меньше текущей)
+// TODO
+//  Проверка, что это правильный пользователь
 @Controller
-@RequestMapping("/clients/{clientId}/appliances")
+@RequestMapping("/appliances")
 @RequiredArgsConstructor
 public class AppliancesController {
+    private final ApplianceValidator applianceValidator;
     private final AppliancesService appliancesService;
     private final ApplianceTypesService applianceTypesService;
 
-    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
+    @ModelAttribute("client")
+    public Client authenticatedClient() {
+        return (Client) SecurityUtils.getAuthenticatedPerson();
+    }
+
     @GetMapping
-    public String showAll(@PathVariable("clientId") Integer clientId,
-                          Model model) {
-        model.addAttribute("clientId", clientId);
-        model.addAttribute("appliances", appliancesService.findAllByOwnerId(clientId));
+    public String showAll(Model model) {
+        Integer ownerId = authenticatedClient().getId();
+        model.addAttribute("appliances", appliancesService.findAllByOwnerId(ownerId));
         return "appliances/index";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
-    @GetMapping("/{applianceId}")
-    public String show(@PathVariable("clientId") Integer clientId,
-                       @PathVariable("applianceId") Integer applianceId,
-                       Model model) {
-        model.addAttribute("clientId", clientId);
-        model.addAttribute("appliance", appliancesService.findById(applianceId));
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("appliance", appliancesService.findById(id));
         return "appliances/id";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @GetMapping("/new")
-    public String addForm(@PathVariable("clientId") Integer clientId,
-                          @ModelAttribute("appliance") Appliance appliance,
-                          Model model) {
-        model.addAttribute("clientId", clientId);
+    public String addForm(@ModelAttribute("appliance") Appliance appliance, Model model) {
         model.addAttribute("applianceTypes", applianceTypesService.findAll());
         return "appliances/new";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
     @PostMapping
-    public String add(@PathVariable("clientId") Integer clientId,
-                      @ModelAttribute("appliance") @Valid Appliance appliance,
+    public String add(@ModelAttribute("appliance") @Valid Appliance appliance,
                       BindingResult bindingResult,
                       Model model) {
+        Client client = authenticatedClient();
+        appliance.setOwner(client);
+        applianceValidator.validate(appliance, bindingResult);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("applianceTypes", applianceTypesService.findAll());
             return "appliances/new";
         }
-        appliancesService.save(appliance, clientId);
-        return "redirect:/clients/{clientId}/appliances";
+
+        appliancesService.save(appliance);
+        return "redirect:/appliances";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
-    @GetMapping("/{applianceId}/edit")
-    public String editForm(@PathVariable("clientId") Integer clientId,
-                           @PathVariable("applianceId") Integer applianceId,
-                           Model model) {
-        model.addAttribute("clientId", clientId);
-        model.addAttribute("appliance", appliancesService.findById(applianceId));
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("appliance", appliancesService.findById(id));
         model.addAttribute("applianceTypes", applianceTypesService.findAll());
         return "appliances/edit";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
-    @PatchMapping("/{applianceId}")
-    public String edit(@PathVariable("clientId") Integer clientId,
-                       @PathVariable("applianceId") Integer applianceId,
+    @PatchMapping("/{id}")
+    public String edit(@PathVariable("id") Integer id,
                        @ModelAttribute("appliance") @Valid Appliance appliance,
                        BindingResult bindingResult,
                        Model model) {
+        Client client = authenticatedClient();
+        appliance.setOwner(client);
+        applianceValidator.validate(appliance, bindingResult);
+
         if (bindingResult.hasErrors()) {
-            appliance.setId(applianceId); // FIXME почему здесь это надо, а у клиентов/мастеров нет???
             model.addAttribute("applianceTypes", applianceTypesService.findAll());
             return "appliances/edit";
         }
-        appliancesService.updateById(applianceId, appliance, clientId);
-        return "redirect:/clients/{clientId}/appliances/{applianceId}";
+
+        appliancesService.updateById(id, appliance);
+        return "redirect:/appliances/{id}";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#clientId)")
-    @DeleteMapping("/{applianceId}")
-    public String delete(@PathVariable("clientId") Integer clientId,
-                         @PathVariable("applianceId") Integer applianceId) {
-        appliancesService.deleteById(applianceId);
-        return "redirect:/clients/{clientId}/appliances";
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        appliancesService.deleteById(id);
+        return "redirect:/appliances";
     }
 }

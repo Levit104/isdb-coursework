@@ -13,20 +13,20 @@
     <p th:text="${appliance.type.name}"></p>
 </div>
 
-<form th:method="GET" th:action="@{'/clients/' + ${clientId} + '/appliances/' + ${appliance.id} + '/edit'}">
+<form th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
     <input type="submit" value="Обновить">
 </form>
 <br>
 
-<form th:method="DELETE" th:action="@{'/clients/' + ${clientId} + '/appliances/' + ${appliance.id}}">
+<form th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">
     <input type="submit" value="Удалить">
 </form>
 <br>
-<form th:method="GET" th:action="@{'/clients/' + ${clientId} + '/appliances'}">
+<form th:method="GET" th:action="@{/appliances}">
     <input type="submit" value="Список техники">
 </form>
 <br>
-<form th:method="GET" th:action="@{'/clients/' + ${clientId}}">
+<form th:method="GET" th:action="@{'/clients/' + ${client.id}}">
     <input type="submit" value="Вернуться в профиль">
 </form>
 

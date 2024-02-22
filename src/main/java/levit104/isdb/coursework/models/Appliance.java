@@ -30,11 +30,11 @@ public class Appliance {
 
     @NotNull(message = ErrorMessages.EMPTY_VALUE)
     @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
     private ApplianceType type;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
     private Client owner;
 }
 

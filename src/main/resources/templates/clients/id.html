@@ -15,7 +15,7 @@
     <p th:text="${client.address}"></p>
 </div>
 
-<form th:method="GET" th:action="@{'/clients/' + ${client.id} + '/appliances'}">
+<form th:method="GET" th:action="@{/appliances}">
     <input type="submit" value="Ваша техника">
 </form>
 <br>

@@ -7,4 +7,6 @@ public class ErrorMessages {
     public static final String TEL_NUMBER_TAKEN = "Пользователь с таким номером телефона уже существует";
     public static final String USERNAME_TAKEN = "Пользователь с таким логином уже существует";
     public static final String EMPTY_SCHEDULE = "Рабочий график не может быть пустым";
+    public static final String APPLIANCE_EXISTS = "У вас уже есть техника с таким названием";
+    public static final String INVALID_PURCHASE_DATE = "Некорректная дата покупки";
 }
