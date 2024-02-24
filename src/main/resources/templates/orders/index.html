@@ -16,7 +16,8 @@
     <span th:text="'Стоимость: ' + ${order.cost}"></span>
     <br>
     <span th:text="'Дата ремонта: ' + ${order.date}"></span>
-<!--    <p th:text="'Мастер: ' + ${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></p>-->
+    <br>
+    <span th:if="${order.repairman}" th:text="'Мастер: ' + ${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></span>
 <!--    <p th:text="'Оплата: ' + ${order.paymentType.name}"></p>-->
     <hr>
 </div>

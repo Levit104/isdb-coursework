@@ -28,6 +28,10 @@ public class RepairmenService {
                 .orElseThrow(() -> new EntityNotFoundException("Пользователь с id=" + id + " не найден"));
     }
 
+    public Repairman findByIdForOrder(Integer id) {
+        return id == null ? null : findById(id);
+    }
+
     @Transactional
     public void updateById(Integer id, Repairman updated) {
         updated.setId(id);
