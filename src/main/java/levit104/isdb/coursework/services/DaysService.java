@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,10 +25,7 @@ public class DaysService {
     }
 
     public List<Integer> getDaysIds(Integer repairmanId) {
-        return findAllByRepairmanId(repairmanId)
-                .stream()
-                .map(Day::getId)
-                .collect(Collectors.toList());
+        return findAllByRepairmanId(repairmanId).stream().map(Day::getId).toList();
     }
 
     @Transactional
@@ -40,10 +36,6 @@ public class DaysService {
     }
 
     private List<Day> convertDaysIdsToDays(List<Integer> daysIds) {
-        return daysIds.stream().map(dayId -> {
-            Day day = new Day();
-            day.setId(dayId);
-            return day;
-        }).collect(Collectors.toList());
+        return daysIds.stream().map(Day::new).toList();
     }
 }

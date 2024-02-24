@@ -2,6 +2,7 @@ package levit104.isdb.coursework.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Table(name = "day")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Day {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +25,8 @@ public class Day {
 
     @ManyToMany(mappedBy = "days")
     private List<Repairman> repairmen;
+
+    public Day(Integer id) {
+        this.id = id;
+    }
 }
