@@ -33,12 +33,6 @@ public class AppliancesController {
         return "appliances/index";
     }
 
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("appliance", appliancesService.findById(id));
-        return "appliances/id";
-    }
-
     @GetMapping("/new")
     public String addForm(@ModelAttribute("appliance") Appliance appliance, Model model) {
         model.addAttribute("applianceTypes", applianceTypesService.findAll());

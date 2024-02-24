@@ -7,13 +7,32 @@
 <body>
 
 <div th:each="appliance : ${appliances}">
-    <a th:href="@{'/appliances/' + ${appliance.id}}" th:text="${appliance.name}"></a>
+    <span th:text="${appliance.name}"></span>
+    <br>
+    <span th:text="${appliance.purchaseDate}"></span>
+    <br>
+    <span th:text="${appliance.type.name}"></span>
+    <br><br>
+    <form th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
+        <input type="submit" value="Обновить">
+    </form>
+    <form th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">
+        <input type="submit" value="Удалить">
+    </form>
+    <hr>
 </div>
 
+<form th:method="GET" th:action="@{/appliances/new}">
+    <input type="submit" value="Добавить технику">
+</form>
 <br>
-<a th:href="@{/appliances/new}">Добавить технику</a>
+<form th:method="GET" th:action="@{/appliances}">
+    <input type="submit" value="Список техники">
+</form>
 <br>
-<a th:href="@{'/clients/' + ${client.id}}">Вернуться в профиль</a>
+<form th:method="GET" th:action="@{'/clients/' + ${clientId}}">
+    <input type="submit" value="Вернуться в профиль">
+</form>
 
 </body>
 </html>
