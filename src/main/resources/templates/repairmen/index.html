@@ -6,10 +6,21 @@
 </head>
 <body>
 
-<div th:each="repairman : ${repairmen}">
-    <a th:href="@{'/repairmen/' + ${repairman.id}}"
-       th:text="${repairman.firstName + ' ' + repairman.lastName}"></a>
-</div>
+<form th:each="repairman : ${repairmen}" th:method="GET" th:action="@{/orders/new}">
+    <input type="hidden" name="repairmanId" th:value="${repairman.id}">
+    <br>
+    <span th:text="${repairman.firstName} + ' ' + ${repairman.lastName}"></span>
+    <br>
+    <span th:text="${repairman.experience}"></span>
+    <br>
+    <span th:text="${repairman.qualification}"></span>
+    <br>
+    <span>Рабочий график:</span>
+    <span th:each="day : ${repairman.days}" th:text="${day.shortName} + ' '"></span>
+    <br><br>
+    <input type="submit" value="Создать заказ">
+    <hr>
+</form>
 
 </body>
 </html>

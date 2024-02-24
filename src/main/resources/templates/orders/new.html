@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать заказ</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/orders}" th:object="${order}">
+    <input type="hidden" name="repairmanId" th:value="${repairmanId}">
+
+    <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <label for="description">Описание проблемы: </label>
+    <input type="text" id="description" th:field="*{description}">
+    <br>
+
+    <div class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+    <label for="date">Дата покупки: </label>
+    <input type="date" id="date" th:field="*{date}">
+    <br>
+
+    <div class="error" th:if="${#fields.hasErrors('appliance')}" th:errors="*{appliance}"></div>
+    <label for="appliance">Тип техники: </label>
+    <select id="appliance" th:field="*{appliance}">
+        <option th:each="appliance : ${appliances}" th:value="${appliance.id}" th:text="${appliance.name}"></option>
+    </select>
+    <br>
+
+    <input type="submit" value="Создать">
+</form>
+
+</body>
+</html>

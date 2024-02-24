@@ -3,6 +3,7 @@ package levit104.isdb.coursework.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import levit104.isdb.coursework.models.order.Order;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,4 +34,7 @@ public class Repairman extends Person {
             inverseJoinColumns = @JoinColumn(name = "day_id")
     )
     private List<Day> days;
+
+    @OneToMany(mappedBy = "repairman")
+    private List<Order> orders;
 }

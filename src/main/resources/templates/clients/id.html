@@ -19,6 +19,14 @@
     <input type="submit" value="Ваша техника">
 </form>
 <br>
+<form th:method="GET" th:action="@{/repairmen}">
+    <input type="submit" value="Список мастеров">
+</form>
+<br>
+<form th:method="GET" th:action="@{/orders}">
+    <input type="submit" value="Список заказов">
+</form>
+<br>
 <form th:method="GET" th:action="@{'/clients/' + ${client.id} + '/edit'}">
     <input type="submit" value="Обновить">
 </form>

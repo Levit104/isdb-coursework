@@ -26,8 +26,8 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/auth/**").anonymous()
                         .requestMatchers("/appliance-types/**").hasAuthority(SecurityUtils.ROLE_ADMIN)
-                        .requestMatchers("/clients/**", "/appliances/**").hasAuthority(SecurityUtils.ROLE_USER_CLIENT)
-                        .requestMatchers("/repairmen/**").hasAuthority(SecurityUtils.ROLE_USER_REPAIRMAN)
+                        .requestMatchers("/clients/**", "/appliances/**", "/orders/**", "/repairmen").hasAuthority(SecurityUtils.ROLE_USER_CLIENT)
+                        .requestMatchers("/repairmen/**", "/schedule/**").hasAuthority(SecurityUtils.ROLE_USER_REPAIRMAN)
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

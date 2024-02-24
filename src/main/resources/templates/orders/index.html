@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+</head>
+<body>
+
+<div th:each="order : ${orders}">
+    <span th:text="'Статус: ' + ${order.orderStatus.name}"></span>
+    <br>
+    <span th:text="'Техника: ' + ${order.appliance.name}"></span>
+    <br>
+    <span th:text="'Описание: ' + ${order.description}"></span>
+    <br>
+    <span th:text="'Стоимость: ' + ${order.cost}"></span>
+    <br>
+    <span th:text="'Дата ремонта: ' + ${order.date}"></span>
+<!--    <p th:text="'Мастер: ' + ${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></p>-->
+<!--    <p th:text="'Оплата: ' + ${order.paymentType.name}"></p>-->
+    <hr>
+</div>
+
+<form th:method="GET" th:action="@{/orders/new}">
+    <input type="submit" value="Создать заказ">
+</form>
+
+</body>
+</html>
