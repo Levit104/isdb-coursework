@@ -2,18 +2,18 @@ package levit104.isdb.coursework.controllers;
 
 import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Appliance;
-import levit104.isdb.coursework.models.Client;
+import levit104.isdb.coursework.security.PersonDetails;
 import levit104.isdb.coursework.services.ApplianceTypesService;
 import levit104.isdb.coursework.services.AppliancesService;
-import levit104.isdb.coursework.util.SecurityUtils;
+import levit104.isdb.coursework.services.ClientsService;
 import levit104.isdb.coursework.validation.ApplianceValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-// TODO Проверка, что это правильный пользователь
 @Controller
 @RequestMapping("/appliances")
 @RequiredArgsConstructor
@@ -21,15 +21,11 @@ public class AppliancesController {
     private final ApplianceValidator applianceValidator;
     private final AppliancesService appliancesService;
     private final ApplianceTypesService applianceTypesService;
-
-    @ModelAttribute("client")
-    public Client authenticatedClient() {
-        return (Client) SecurityUtils.getAuthenticatedPerson();
-    }
+    private final ClientsService clientsService;
 
     @GetMapping
-    public String showAll(Model model) {
-        model.addAttribute("appliances", appliancesService.findAllByOwnerId(authenticatedClient().getId()));
+    public String showAll(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
+        model.addAttribute("appliances", appliancesService.findAllByOwnerId(personDetails.getId()));
         return "appliances/index";
     }
 
@@ -40,10 +36,11 @@ public class AppliancesController {
     }
 
     @PostMapping
-    public String add(@ModelAttribute("appliance") @Valid Appliance appliance,
+    public String add(@AuthenticationPrincipal PersonDetails personDetails,
+                      @ModelAttribute("appliance") @Valid Appliance appliance,
                       BindingResult bindingResult,
                       Model model) {
-        appliance.setOwner(authenticatedClient());
+        appliance.setOwner(clientsService.findById(personDetails.getId()));
         applianceValidator.validate(appliance, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -63,11 +60,12 @@ public class AppliancesController {
     }
 
     @PatchMapping("/{id}")
-    public String edit(@PathVariable("id") Integer id,
+    public String edit(@AuthenticationPrincipal PersonDetails personDetails,
+                       @PathVariable("id") Integer id,
                        @ModelAttribute("appliance") @Valid Appliance appliance,
                        BindingResult bindingResult,
                        Model model) {
-        appliance.setOwner(authenticatedClient());
+        appliance.setOwner(clientsService.findById(personDetails.getId()));
         applianceValidator.validate(appliance, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -76,7 +74,7 @@ public class AppliancesController {
         }
 
         appliancesService.updateById(id, appliance);
-        return "redirect:/appliances/{id}";
+        return "redirect:/appliances";
     }
 
     @DeleteMapping("/{id}")

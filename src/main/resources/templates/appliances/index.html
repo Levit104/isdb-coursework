@@ -26,11 +26,7 @@
     <input type="submit" value="Добавить технику">
 </form>
 <br>
-<form th:method="GET" th:action="@{/appliances}">
-    <input type="submit" value="Список техники">
-</form>
-<br>
-<form th:method="GET" th:action="@{'/clients/' + ${clientId}}">
+<form th:method="GET" th:action="@{/clients/profile}">
     <input type="submit" value="Вернуться в профиль">
 </form>
 

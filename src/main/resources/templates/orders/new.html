@@ -20,12 +20,12 @@
     <br>
 
     <div class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
-    <label for="date">Дата покупки: </label>
+    <label for="date">Дата прихода мастера: </label>
     <input type="date" id="date" th:field="*{date}">
     <br>
 
     <div class="error" th:if="${#fields.hasErrors('appliance')}" th:errors="*{appliance}"></div>
-    <label for="appliance">Тип техники: </label>
+    <label for="appliance">Техника: </label>
     <select id="appliance" th:field="*{appliance}">
         <option th:each="appliance : ${appliances}" th:value="${appliance.id}" th:text="${appliance.name}"></option>
     </select>

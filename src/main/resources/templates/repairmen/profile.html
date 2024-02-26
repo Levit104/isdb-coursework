@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+
+<div>
+    <span th:text="${repairman.firstName + ' ' + repairman.lastName}"></span>
+    <br>
+    <span th:text="${repairman.email}"></span>
+    <br>
+    <span th:text="${repairman.telNumber}"></span>
+    <br>
+    <span th:text="${repairman.username}"></span>
+    <br>
+    <span th:text="${repairman.experience}"></span>
+    <br>
+    <span th:text="${repairman.qualification}"></span>
+    <br>
+    <span th:text="${repairman.rating}"></span>
+</div>
+
+<br>
+<form th:method="GET" th:action="@{/repairmen/profile/edit}">
+    <input type="submit" value="Обновить">
+</form>
+<br>
+<form th:method="DELETE" th:action="@{/repairmen/profile}">
+    <input type="submit" value="Удалить">
+</form>
+<br>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Выйти из аккаунта">
+</form>
+
+</body>
+</html>

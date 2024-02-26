@@ -10,25 +10,28 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        int personId = SecurityUtils.getAuthenticatedPerson(authentication).getId();
+        Map<String, String> roleTargetUrlMap = new HashMap<>();
+        roleTargetUrlMap.put("ROLE_USER_CLIENT", "/clients/main");
+        roleTargetUrlMap.put("ROLE_USER_REPAIRMAN", "/repairmen/main");
+        roleTargetUrlMap.put("ROLE_ADMIN", "/");
+
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         String url = authorities.stream()
-                .anyMatch(a -> a.getAuthority().equals(SecurityUtils.ROLE_USER_CLIENT)) ? "/clients/" : "/repairmen/";
+                .map(GrantedAuthority::getAuthority)
+                .filter(roleTargetUrlMap::containsKey)
+                .map(roleTargetUrlMap::get)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Ошибка авторизации"));
 
-        SimpleUrlAuthenticationSuccessHandler successHandler =
-                new SimpleUrlAuthenticationSuccessHandler(url + personId);
-
+        SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler(url);
         successHandler.onAuthenticationSuccess(request, response, authentication);
     }
 }
-
-
-
-
-

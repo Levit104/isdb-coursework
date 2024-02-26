@@ -1,13 +1,18 @@
 package levit104.isdb.coursework.validation;
 
 
+import levit104.isdb.coursework.models.Day;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.models.order.Order;
-import levit104.isdb.coursework.util.MyUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.List;
+import java.util.Locale;
 
 @Component
 public class OrderValidator implements Validator {
@@ -21,10 +26,18 @@ public class OrderValidator implements Validator {
         Order order = (Order) target;
         Repairman repairman = order.getRepairman();
 
-        if (repairman == null)
-            return;
+        if (order.getDate() != null) {
+            if (order.getDate().isBefore(LocalDate.now()))
+                errors.rejectValue("date", "", ErrorMessages.INVALID_PURCHASE_DATE);
 
-        if (!MyUtils.dayInSchedule(order.getDate(), repairman.getDays()))
-            errors.rejectValue("date", "", "Выбранный мастер не работает в этот день недели");
+            if (repairman != null && !dayInSchedule(order.getDate(), repairman.getDays()))
+                errors.rejectValue("date", "",
+                        ErrorMessages.REPAIRMAN_NOT_WORKING_DAY + " (" + repairman.scheduleString() + ")");
+        }
+    }
+
+    private boolean dayInSchedule(LocalDate date, List<Day> schedule) {
+        String dateDayOfWeek = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+        return schedule.stream().anyMatch(day -> day.getFullName().equalsIgnoreCase(dateDayOfWeek));
     }
 }

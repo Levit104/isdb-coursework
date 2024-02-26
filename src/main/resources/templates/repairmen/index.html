@@ -15,8 +15,7 @@
     <br>
     <span th:text="${repairman.qualification}"></span>
     <br>
-    <span>Рабочий график:</span>
-    <span th:each="day : ${repairman.days}" th:text="${day.shortName} + ' '"></span>
+    <span th:text="'Рабочий график: ' + ${repairman.scheduleString()}"></span>
     <br><br>
     <input type="submit" value="Создать заказ">
     <hr>

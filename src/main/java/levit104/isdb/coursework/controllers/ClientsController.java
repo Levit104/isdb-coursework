@@ -2,10 +2,11 @@ package levit104.isdb.coursework.controllers;
 
 import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Client;
+import levit104.isdb.coursework.security.PersonDetails;
 import levit104.isdb.coursework.services.ClientsService;
 import levit104.isdb.coursework.validation.PersonValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,42 +19,38 @@ public class ClientsController {
     private final PersonValidator personValidator;
     private final ClientsService clientsService;
 
-    @GetMapping
-    public String showAll(Model model) {
-        model.addAttribute("clients", clientsService.findAll());
-        return "clients/index";
+    @GetMapping("/main")
+    public String index() {
+        return "clients/main";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#id)")
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("client", clientsService.findById(id));
-        return "clients/id";
+    @GetMapping("/profile")
+    public String show(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
+        model.addAttribute("client", clientsService.findById(personDetails.getId()));
+        return "clients/profile";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#id)")
-    @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("client", clientsService.findById(id));
+    @GetMapping("/profile/edit")
+    public String editForm(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
+        model.addAttribute("client", clientsService.findById(personDetails.getId()));
         return "clients/edit";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#id)")
-    @PatchMapping("/{id}")
-    public String edit(@PathVariable("id") Integer id,
+    @PatchMapping("/profile")
+    public String edit(@AuthenticationPrincipal PersonDetails personDetails,
                        @ModelAttribute("client") @Valid Client client,
                        BindingResult bindingResult) {
+        client.setId(personDetails.getId());
         personValidator.validate(client, bindingResult);
         if (bindingResult.hasErrors())
             return "clients/edit";
-        clientsService.updateById(id, client);
-        return "redirect:/clients/{id}";
+        clientsService.save(client);
+        return "redirect:/clients/profile";
     }
 
-    @PreAuthorize("@peopleService.hasCorrectId(#id)")
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Integer id) {
-        clientsService.deleteById(id);
-        return "redirect:/clients";
+    @DeleteMapping("/profile")
+    public String delete(@AuthenticationPrincipal PersonDetails personDetails) {
+        clientsService.deleteById(personDetails.getId());
+        return "redirect:/logout";
     }
 }

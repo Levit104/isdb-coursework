@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{'/clients/' + ${client.id}}" th:object="${client}">
+<form th:method="PATCH" th:action="@{/clients/profile}" th:object="${client}">
     <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
     <label for="firstName">Имя: </label>
     <input type="text" id="firstName" th:field="*{firstName}">
@@ -51,7 +51,7 @@
 </form>
 
 <br>
-<a th:href="@{'/clients/' + ${client.id}}">Вернуться в профиль</a>
+<a th:href="@{/clients/profile}">Вернуться в профиль</a>
 
 </body>
 </html>

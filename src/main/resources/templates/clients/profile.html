@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+
+<div>
+    <span th:text="${client.firstName + ' ' + client.lastName}"></span>
+    <br>
+    <span th:text="${client.email}"></span>
+    <br>
+    <span th:text="${client.telNumber}"></span>
+    <br>
+    <span th:text="${client.username}"></span>
+    <br>
+    <span th:text="${client.address}"></span>
+</div>
+
+<br>
+<form th:method="GET" th:action="@{/clients/profile/edit}">
+    <input type="submit" value="Обновить">
+</form>
+<br>
+<form th:method="DELETE" th:action="@{/clients/profile}">
+    <input type="submit" value="Удалить">
+</form>
+<br>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Выйти из аккаунта">
+</form>
+
+</body>
+</html>

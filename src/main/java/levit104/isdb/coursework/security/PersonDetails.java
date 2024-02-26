@@ -1,7 +1,6 @@
 package levit104.isdb.coursework.security;
 
 import levit104.isdb.coursework.models.Person;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,9 +10,12 @@ import java.util.Collection;
 import java.util.Collections;
 
 @RequiredArgsConstructor
-@Getter
 public class PersonDetails implements UserDetails {
     private final Person person;
+
+    public Integer getId() {
+        return person.getId();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

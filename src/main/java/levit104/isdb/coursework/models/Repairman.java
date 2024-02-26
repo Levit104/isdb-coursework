@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "repairman")
@@ -37,4 +38,10 @@ public class Repairman extends Person {
 
     @OneToMany(mappedBy = "repairman")
     private List<Order> orders;
+
+    public String scheduleString() {
+        return this.getDays().stream()
+                .map(Day::getShortName)
+                .collect(Collectors.joining(", "));
+    }
 }

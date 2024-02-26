@@ -1,6 +1,5 @@
 package levit104.isdb.coursework.security;
 
-import levit104.isdb.coursework.util.SecurityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,9 +24,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/auth/**").anonymous()
-                        .requestMatchers("/appliance-types/**").hasAuthority(SecurityUtils.ROLE_ADMIN)
-                        .requestMatchers("/clients/**", "/appliances/**", "/orders/**", "/repairmen").hasAuthority(SecurityUtils.ROLE_USER_CLIENT)
-                        .requestMatchers("/repairmen/**", "/schedule/**").hasAuthority(SecurityUtils.ROLE_USER_REPAIRMAN)
+                        .requestMatchers("/appliance-types/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/clients/**", "/appliances/**", "/orders/**", "/repairmen").hasAuthority("ROLE_USER_CLIENT")
+                        .requestMatchers("/repairmen/**", "/schedule/**").hasAuthority("ROLE_USER_REPAIRMAN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
