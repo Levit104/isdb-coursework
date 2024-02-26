@@ -4,6 +4,8 @@ package levit104.isdb.coursework.validation;
 import levit104.isdb.coursework.models.Day;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.models.order.Order;
+import levit104.isdb.coursework.services.OrdersService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -13,9 +15,13 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class OrderValidator implements Validator {
+    private final OrdersService ordersService;
+
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
         return Order.class.equals(clazz);
@@ -26,9 +32,13 @@ public class OrderValidator implements Validator {
         Order order = (Order) target;
         Repairman repairman = order.getRepairman();
 
+        Optional<Order> orderFromDB = ordersService.findByClientAndAppliance(order.getClient(), order.getAppliance());
+        if (orderFromDB.isPresent() && orderFromDB.get().isActive())
+            errors.rejectValue("appliance", "", "Заказ на данную технику уже есть");
+
         if (order.getDate() != null) {
             if (order.getDate().isBefore(LocalDate.now()))
-                errors.rejectValue("date", "", ErrorMessages.INVALID_PURCHASE_DATE);
+                errors.rejectValue("date", "", ErrorMessages.INVALID_ORDER_DATE);
 
             if (repairman != null && !dayInSchedule(order.getDate(), repairman.getDays()))
                 errors.rejectValue("date", "",

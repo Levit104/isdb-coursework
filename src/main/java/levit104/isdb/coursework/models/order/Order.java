@@ -37,6 +37,7 @@ public class Order {
     @Column(nullable = false)
     private boolean active = true;
 
+    @NotNull(message = ErrorMessages.EMPTY_VALUE)
     @ManyToOne
     @JoinColumn(name = "appliance_id", referencedColumnName = "id", nullable = false)
     private Appliance appliance;
