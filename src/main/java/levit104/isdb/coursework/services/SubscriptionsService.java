@@ -1,6 +1,7 @@
 package levit104.isdb.coursework.services;
 
 import levit104.isdb.coursework.exceptions.EntityNotFoundException;
+import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.models.Subscription;
 import levit104.isdb.coursework.models.SubscriptionPlan;
 import levit104.isdb.coursework.repos.SubscriptionPlansRepository;
@@ -22,6 +23,19 @@ public class SubscriptionsService {
 
     public List<SubscriptionPlan> findAllPlans() {
         return subscriptionPlansRepository.findAll();
+    }
+
+    public List<SubscriptionPlan> getAvailablePlans(Integer clientId) {
+        Client client = clientsService.findById(clientId);
+        List<SubscriptionPlan> allPlans = findAllPlans();
+
+        List<SubscriptionPlan> clientPlans = client.getSubscriptions().stream()
+                .map(Subscription::getSubscriptionPlan)
+                .toList();
+
+        return allPlans.stream()
+                .filter(plan -> !clientPlans.contains(plan))
+                .toList();
     }
 
     public SubscriptionPlan findPlanById(Integer id) {

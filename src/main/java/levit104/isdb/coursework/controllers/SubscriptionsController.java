@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-// TODO проверка, что такая подписка у пользователя уже есть
 @Controller
 @RequestMapping("/subscriptions")
 @RequiredArgsConstructor
@@ -22,8 +21,9 @@ public class SubscriptionsController {
     }
 
     @GetMapping("/new")
-    public String showPlans(Model model) {
-        model.addAttribute("subscriptionPlans", subscriptionsService.findAllPlans());
+    public String showPlans(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
+//        model.addAttribute("subscriptionPlans", subscriptionsService.findAllPlans());
+        model.addAttribute("subscriptionPlans", subscriptionsService.getAvailablePlans(personDetails.getId()));
         return "subscriptions/new";
     }
 
