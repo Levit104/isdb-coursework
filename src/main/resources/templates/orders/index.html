@@ -7,17 +7,12 @@
 <body>
 
 <div th:each="order : ${orders}">
-    <span th:text="'Статус: ' + ${order.orderStatus.name}"></span>
-    <br>
-    <span th:text="'Техника: ' + ${order.appliance.name}"></span>
-    <br>
-    <span th:text="'Описание: ' + ${order.description}"></span>
-    <br>
-    <span th:text="'Стоимость: ' + ${order.cost}"></span>
-    <br>
-    <span th:text="'Дата ремонта: ' + ${order.date}"></span>
-    <br>
-    <span th:if="${order.repairman}" th:text="'Мастер: ' + ${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></span>
+    <p th:text="'Статус: ' + ${order.orderStatus.name}"></p>
+    <p th:text="'Техника: ' + ${order.appliance.name}"></p>
+    <p th:text="'Описание: ' + ${order.description}"></p>
+    <p th:text="'Стоимость: ' + ${order.cost}"></p>
+    <p th:text="'Дата ремонта: ' + ${order.date}"></p>
+    <p th:if="${order.repairman}" th:text="'Мастер: ' + ${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></p>
 <!--    <p th:text="'Оплата: ' + ${order.paymentType.name}"></p>-->
     <hr>
 </div>

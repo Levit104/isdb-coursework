@@ -7,15 +7,13 @@
 <body>
 
 <div th:each="appliance : ${appliances}">
-    <span th:text="${appliance.name}"></span>
-    <br>
-    <span th:text="${appliance.purchaseDate}"></span>
-    <br>
-    <span th:text="${appliance.type.name}"></span>
-    <br><br>
+    <p th:text="${appliance.name}"></p>
+    <p th:text="${appliance.purchaseDate}"></p>
+    <p th:text="${appliance.type.name}"></p>
     <form th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
         <input type="submit" value="Обновить">
     </form>
+    <br>
     <form th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">
         <input type="submit" value="Удалить">
     </form>
@@ -24,10 +22,6 @@
 
 <form th:method="GET" th:action="@{/appliances/new}">
     <input type="submit" value="Добавить технику">
-</form>
-<br>
-<form th:method="GET" th:action="@{/clients/profile}">
-    <input type="submit" value="Вернуться в профиль">
 </form>
 
 </body>

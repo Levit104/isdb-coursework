@@ -7,22 +7,15 @@
 <body>
 
 <div>
-    <span th:text="${repairman.firstName + ' ' + repairman.lastName}"></span>
-    <br>
-    <span th:text="${repairman.email}"></span>
-    <br>
-    <span th:text="${repairman.telNumber}"></span>
-    <br>
-    <span th:text="${repairman.username}"></span>
-    <br>
-    <span th:text="${repairman.experience}"></span>
-    <br>
-    <span th:text="${repairman.qualification}"></span>
-    <br>
-    <span th:text="${repairman.rating}"></span>
+    <p th:text="${repairman.firstName + ' ' + repairman.lastName}"></p>
+    <p th:text="${repairman.email}"></p>
+    <p th:text="${repairman.telNumber}"></p>
+    <p th:text="${repairman.username}"></p>
+    <p th:text="${repairman.experience}"></p>
+    <p th:text="${repairman.qualification}"></p>
+    <p th:text="${repairman.rating}"></p>
 </div>
 
-<br>
 <form th:method="GET" th:action="@{/repairmen/profile/edit}">
     <input type="submit" value="Обновить">
 </form>

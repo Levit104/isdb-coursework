@@ -7,18 +7,13 @@
 <body>
 
 <div>
-    <span th:text="${client.firstName + ' ' + client.lastName}"></span>
-    <br>
-    <span th:text="${client.email}"></span>
-    <br>
-    <span th:text="${client.telNumber}"></span>
-    <br>
-    <span th:text="${client.username}"></span>
-    <br>
-    <span th:text="${client.address}"></span>
+    <p th:text="${client.firstName + ' ' + client.lastName}"></p>
+    <p th:text="${client.email}"></p>
+    <p th:text="${client.telNumber}"></p>
+    <p th:text="${client.username}"></p>
+    <p th:text="${client.address}"></p>
 </div>
 
-<br>
 <form th:method="GET" th:action="@{/clients/profile/edit}">
     <input type="submit" value="Обновить">
 </form>

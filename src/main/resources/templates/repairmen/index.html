@@ -6,20 +6,17 @@
 </head>
 <body>
 
-<form th:each="repairman : ${repairmen}" th:method="GET" th:action="@{/orders/new}">
-    <input type="hidden" name="repairmanId" th:value="${repairman.id}">
-    <br>
-    <span th:text="${repairman.firstName} + ' ' + ${repairman.lastName}"></span>
-    <br>
-    <span th:text="${repairman.experience}"></span>
-    <br>
-    <span th:text="${repairman.qualification}"></span>
-    <br>
-    <span th:text="'Рабочий график: ' + ${repairman.scheduleString()}"></span>
-    <br><br>
-    <input type="submit" value="Создать заказ">
+<div th:each="repairman : ${repairmen}">
+    <p th:text="${repairman.firstName} + ' ' + ${repairman.lastName}"></p>
+    <p th:text="${repairman.experience}"></p>
+    <p th:text="${repairman.qualification}"></p>
+    <p th:text="'Рабочий график: ' + ${repairman.scheduleString()}"></p>
+    <form th:method="GET" th:action="@{/orders/new}">
+        <input type="hidden" name="repairmanId" th:value="${repairman.id}">
+        <input type="submit" value="Создать заказ">
+    </form>
     <hr>
-</form>
+</div>
 
 </body>
 </html>
