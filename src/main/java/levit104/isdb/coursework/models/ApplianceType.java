@@ -17,7 +17,6 @@ public class ApplianceType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
     @Column(unique = true, nullable = false)
     private String name;
 

@@ -3,7 +3,6 @@ package levit104.isdb.coursework.controllers;
 import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Appliance;
 import levit104.isdb.coursework.security.PersonDetails;
-import levit104.isdb.coursework.services.ApplianceTypesService;
 import levit104.isdb.coursework.services.AppliancesService;
 import levit104.isdb.coursework.services.ClientsService;
 import levit104.isdb.coursework.validation.ApplianceValidator;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class AppliancesController {
     private final ApplianceValidator applianceValidator;
     private final AppliancesService appliancesService;
-    private final ApplianceTypesService applianceTypesService;
     private final ClientsService clientsService;
 
     @GetMapping
@@ -31,7 +29,7 @@ public class AppliancesController {
 
     @GetMapping("/new")
     public String addForm(@ModelAttribute("appliance") Appliance appliance, Model model) {
-        model.addAttribute("applianceTypes", applianceTypesService.findAll());
+        model.addAttribute("applianceTypes", appliancesService.findAllTypes());
         return "appliances/new";
     }
 
@@ -44,7 +42,7 @@ public class AppliancesController {
         applianceValidator.validate(appliance, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("applianceTypes", applianceTypesService.findAll());
+            model.addAttribute("applianceTypes", appliancesService.findAllTypes());
             return "appliances/new";
         }
 
@@ -55,7 +53,7 @@ public class AppliancesController {
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("appliance", appliancesService.findById(id));
-        model.addAttribute("applianceTypes", applianceTypesService.findAll());
+        model.addAttribute("applianceTypes", appliancesService.findAllTypes());
         return "appliances/edit";
     }
 
@@ -69,7 +67,7 @@ public class AppliancesController {
         applianceValidator.validate(appliance, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("applianceTypes", applianceTypesService.findAll());
+            model.addAttribute("applianceTypes", appliancesService.findAllTypes());
             return "appliances/edit";
         }
 
