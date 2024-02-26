@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оформить подписку</title>
+</head>
+<body>
+
+<div th:each="plan : ${subscriptionPlans}">
+    <h3 th:text="${plan.name}"></h3>
+    <p th:text="'Стоимость: ' + ${plan.price}"></p>
+
+    <div>
+        <span>Для следующей техники: </span>
+        <br>
+        <div th:each="type: ${plan.applianceTypes}">
+            <span th:text="${type.name}"></span>
+        </div>
+    </div>
+
+    <br>
+    <form th:method="POST" th:action="@{/subscriptions}">
+        <input type="hidden" name="planId" th:value="${plan.id}" />
+        <label for="duration">Выберите продолжительность подписки:</label>
+        <select name="duration" id="duration">
+            <option value="1">1 месяц</option>
+            <option value="3">3 месяца</option>
+            <option value="6">6 месяцев</option>
+            <option value="12">1 год</option>
+        </select>
+        <br><br>
+        <input type="submit" value="Оформить">
+    </form>
+
+    <hr>
+</div>
+
+</body>
+</html>

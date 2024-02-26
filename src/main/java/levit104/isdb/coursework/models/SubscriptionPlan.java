@@ -7,10 +7,10 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "appliance_type")
+@Table(name = "subscription_plan")
 @Getter
 @Setter
-public class ApplianceType {
+public class SubscriptionPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -18,10 +18,12 @@ public class ApplianceType {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "type")
-    private List<Appliance> appliances;
+    @Column(nullable = false)
+    private Integer price;
 
-    @ManyToOne
-    @JoinColumn(name = "subscription_plan_id", referencedColumnName = "id", nullable = false)
-    private SubscriptionPlan subscriptionPlan;
+    @OneToMany(mappedBy = "subscriptionPlan")
+    private List<ApplianceType> applianceTypes;
+
+    @OneToMany(mappedBy = "subscriptionPlan")
+    private List<Subscription> subscriptions;
 }

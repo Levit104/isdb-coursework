@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Подписки</title>
+</head>
+<body>
+
+<div th:if="${!activeSubscriptions.isEmpty()}">
+    <h2>Оформленные подписки</h2>
+    <div th:each="subscription : ${activeSubscriptions}">
+        <h3 th:text="${subscription.subscriptionPlan.name}"></h3>
+        <p th:text="'Стоимость: ' + ${subscription.subscriptionPlan.price}"></p>
+        <p th:text="'Дата начала: ' + ${subscription.startDate}"></p>
+        <p th:text="'Дата окончания: ' + ${subscription.endDate}"></p>
+        <hr>
+    </div>
+</div>
+
+<div th:if="${activeSubscriptions.isEmpty()}">
+    <p>У вас нет активных подписок</p>
+</div>
+
+<form th:method="GET" th:action="@{/subscriptions/new}">
+    <input type="submit" value="Оформить подписку">
+</form>
+
+</body>
+</html>

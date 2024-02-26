@@ -24,7 +24,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/auth/**").anonymous()
-                        .requestMatchers("/clients/**", "/appliances/**", "/orders/**", "/repairmen").hasAuthority("ROLE_USER_CLIENT")
+                        .requestMatchers("/clients/**", "/appliances/**", "/orders/**",
+                                "/subscriptions/**", "/repairmen").hasAuthority("ROLE_USER_CLIENT")
                         .requestMatchers("/repairmen/**", "/schedule/**").hasAuthority("ROLE_USER_REPAIRMAN")
                         .anyRequest().authenticated()
                 )
