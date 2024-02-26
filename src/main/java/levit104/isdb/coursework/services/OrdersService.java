@@ -3,6 +3,7 @@ package levit104.isdb.coursework.services;
 import levit104.isdb.coursework.models.Appliance;
 import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.models.order.Order;
+import levit104.isdb.coursework.repos.PaymentTypesRepository;
 import levit104.isdb.coursework.repos.order.OrdersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class OrdersService {
     private final OrdersRepository ordersRepository;
+    private final PaymentTypesRepository paymentTypesRepository;
 
     public List<Order> findAllByClientId(Integer id) {
         return ordersRepository.findAllByClientId(id);
@@ -28,8 +30,19 @@ public class OrdersService {
 
     @Transactional
     public void save(Order order) {
+        boolean subscribed = order.getClient().getSubscriptions()
+                .stream()
+                .anyMatch(s -> s.getSubscriptionPlan().equals(order.getAppliance().getType().getSubscriptionPlan()));
+
+//        FIXME заменить null???
+        if (subscribed)
+            order.setPaymentType(paymentTypesRepository.findByName("Подписка").orElse(null));
+        else
+            order.setPaymentType(paymentTypesRepository.findByName("Безналичная").orElse(null));
+
         int cost = randomCost();
         order.setCost(cost);
+
         ordersRepository.save(order);
     }
 

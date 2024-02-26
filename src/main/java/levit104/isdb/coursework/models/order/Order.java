@@ -51,7 +51,7 @@ public class Order {
     private Repairman repairman;
 
     @ManyToOne
-    @JoinColumn(name = "payment_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "payment_type_id", referencedColumnName = "id", nullable = false)
     private PaymentType paymentType;
 
     @ManyToOne
