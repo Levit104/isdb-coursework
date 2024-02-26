@@ -6,18 +6,25 @@
 </head>
 <body>
 
-<div th:each="appliance : ${appliances}">
-    <p th:text="${appliance.name}"></p>
-    <p th:text="${appliance.purchaseDate}"></p>
-    <p th:text="${appliance.type.name}"></p>
-    <form th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
-        <input type="submit" value="Обновить">
-    </form>
-    <br>
-    <form th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">
-        <input type="submit" value="Удалить">
-    </form>
-    <hr>
+<div th:if="${!appliances.isEmpty()}">
+    <h2>Добавленная техника</h2>
+    <div th:each="appliance : ${appliances}">
+        <p th:text="${appliance.name}"></p>
+        <p th:text="${appliance.purchaseDate}"></p>
+        <p th:text="${appliance.type.name}"></p>
+        <form th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
+            <input type="submit" value="Обновить">
+        </form>
+        <br>
+        <form th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">
+            <input type="submit" value="Удалить">
+        </form>
+        <hr>
+    </div>
+</div>
+
+<div th:if="${appliances.isEmpty()}">
+    <p>У вас нет добавленной техники</p>
 </div>
 
 <form th:method="GET" th:action="@{/appliances/new}">

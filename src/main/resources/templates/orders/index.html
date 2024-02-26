@@ -6,15 +6,22 @@
 </head>
 <body>
 
-<div th:each="order : ${orders}">
-    <p th:text="'Статус: ' + ${order.orderStatus.name}"></p>
-    <p th:text="'Техника: ' + ${order.appliance.name}"></p>
-    <p th:text="'Описание: ' + ${order.description}"></p>
-    <p th:text="'Стоимость: ' + ${order.cost}"></p>
-    <p th:text="'Дата ремонта: ' + ${order.date}"></p>
-    <p th:if="${order.repairman}" th:text="'Мастер: ' + ${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></p>
-<!--    <p th:text="'Оплата: ' + ${order.paymentType.name}"></p>-->
-    <hr>
+<div th:if="${!orders.isEmpty()}">
+    <h2>Оформленные заказы</h2>
+    <div th:each="order : ${orders}">
+        <p th:text="'Статус: ' + ${order.orderStatus.name}"></p>
+        <p th:text="'Техника: ' + ${order.appliance.name}"></p>
+        <p th:text="'Описание: ' + ${order.description}"></p>
+        <p th:text="'Стоимость: ' + ${order.cost}"></p>
+        <p th:text="'Дата ремонта: ' + ${order.date}"></p>
+        <p th:if="${order.repairman}" th:text="'Мастер: ' + ${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></p>
+        <!--    <p th:text="'Оплата: ' + ${order.paymentType.name}"></p>-->
+        <hr>
+    </div>
+</div>
+
+<div th:if="${orders.isEmpty()}">
+    <p>У вас нет оформленных заказов</p>
 </div>
 
 <form th:method="GET" th:action="@{/orders/new}">

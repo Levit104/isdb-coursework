@@ -6,16 +6,23 @@
 </head>
 <body>
 
-<div th:each="repairman : ${repairmen}">
-    <p th:text="${repairman.firstName} + ' ' + ${repairman.lastName}"></p>
-    <p th:text="${repairman.experience}"></p>
-    <p th:text="${repairman.qualification}"></p>
-    <p th:text="'Рабочий график: ' + ${repairman.scheduleString()}"></p>
-    <form th:method="GET" th:action="@{/orders/new}">
-        <input type="hidden" name="repairmanId" th:value="${repairman.id}">
-        <input type="submit" value="Создать заказ">
-    </form>
-    <hr>
+<div th:if="${!repairmen.isEmpty()}">
+    <h2>Доступные мастера</h2>
+    <div th:each="repairman : ${repairmen}">
+        <p th:text="${repairman.firstName} + ' ' + ${repairman.lastName}"></p>
+        <p th:text="${repairman.experience}"></p>
+        <p th:text="${repairman.qualification}"></p>
+        <p th:text="'Рабочий график: ' + ${repairman.scheduleString()}"></p>
+        <form th:method="GET" th:action="@{/orders/new}">
+            <input type="hidden" name="repairmanId" th:value="${repairman.id}">
+            <input type="submit" value="Создать заказ">
+        </form>
+        <hr>
+    </div>
+</div>
+
+<div th:if="${repairmen.isEmpty()}">
+    <p>В данный момент заказ с выбором мастера недоступен</p>
 </div>
 
 </body>
