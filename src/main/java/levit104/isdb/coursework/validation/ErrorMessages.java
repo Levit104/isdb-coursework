@@ -11,4 +11,5 @@ public class ErrorMessages {
     public static final String INVALID_PURCHASE_DATE = "Некорректная дата покупки";
     public static final String INVALID_ORDER_DATE = "Некорректная дата прихода мастера";
     public static final String REPAIRMAN_NOT_WORKING_DAY = "Выбранный мастер не работает в этот день недели";
+    public static final String ORDER_FOR_APPLIANCE_EXISTS = "Заказ на данную технику уже есть";
 }

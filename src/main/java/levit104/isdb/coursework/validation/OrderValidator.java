@@ -34,7 +34,7 @@ public class OrderValidator implements Validator {
 
         Optional<Order> orderFromDB = ordersService.findByClientAndAppliance(order.getClient(), order.getAppliance());
         if (orderFromDB.isPresent() && orderFromDB.get().isActive())
-            errors.rejectValue("appliance", "", "Заказ на данную технику уже есть");
+            errors.rejectValue("appliance", "", ErrorMessages.ORDER_FOR_APPLIANCE_EXISTS);
 
         if (order.getDate() != null) {
             if (order.getDate().isBefore(LocalDate.now()))
