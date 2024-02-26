@@ -1,8 +1,6 @@
 package levit104.isdb.coursework.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
 
