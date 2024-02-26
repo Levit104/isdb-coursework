@@ -43,12 +43,6 @@ public class AppliancesService {
     }
 
     @Transactional
-    public void updateById(Integer id, Appliance appliance) {
-        appliance.setId(id);
-        save(appliance);
-    }
-
-    @Transactional
     public void deleteById(Integer id) {
         appliancesRepository.deleteById(id);
     }

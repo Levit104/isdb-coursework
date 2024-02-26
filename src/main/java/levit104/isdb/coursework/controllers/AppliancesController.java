@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+// TODO ошибка при удалении прибора, на который сделан заказ
 @Controller
 @RequestMapping("/appliances")
 @RequiredArgsConstructor
@@ -63,6 +64,7 @@ public class AppliancesController {
                        @ModelAttribute("appliance") @Valid Appliance appliance,
                        BindingResult bindingResult,
                        Model model) {
+        appliance.setId(id);
         appliance.setOwner(clientsService.findById(personDetails.getId()));
         applianceValidator.validate(appliance, bindingResult);
 
@@ -71,7 +73,7 @@ public class AppliancesController {
             return "appliances/edit";
         }
 
-        appliancesService.updateById(id, appliance);
+        appliancesService.save(appliance);
         return "redirect:/appliances";
     }
 
