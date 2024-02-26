@@ -24,11 +24,11 @@ public class Subscription {
     private LocalDate endDate;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "subscription_id", referencedColumnName = "id")
+    @JoinColumn(name = "subscription_id", referencedColumnName = "id", nullable = false)
     private SubscriptionPlan subscriptionPlan;
 
     public Subscription(LocalDate startDate, LocalDate endDate, Client client, SubscriptionPlan subscriptionPlan) {

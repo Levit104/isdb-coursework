@@ -38,11 +38,11 @@ public class Order {
     private boolean active = true;
 
     @ManyToOne
-    @JoinColumn(name = "appliance_id", referencedColumnName = "id")
+    @JoinColumn(name = "appliance_id", referencedColumnName = "id", nullable = false)
     private Appliance appliance;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
     private Client client;
 
     @ManyToOne
@@ -54,6 +54,6 @@ public class Order {
     private PaymentType paymentType;
 
     @ManyToOne
-    @JoinColumn(name = "order_status_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_status_id", referencedColumnName = "id", nullable = false)
     private OrderStatus orderStatus;
 }
