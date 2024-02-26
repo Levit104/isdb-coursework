@@ -6,14 +6,12 @@ import jakarta.validation.constraints.NotBlank;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "person")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-@ToString
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

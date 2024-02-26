@@ -7,7 +7,6 @@ import levit104.isdb.coursework.models.order.Order;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 @Table(name = "repairman")
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class Repairman extends Person {
     private double rating;
 
