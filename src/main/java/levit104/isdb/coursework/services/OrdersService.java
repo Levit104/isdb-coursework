@@ -2,9 +2,9 @@ package levit104.isdb.coursework.services;
 
 import levit104.isdb.coursework.models.Appliance;
 import levit104.isdb.coursework.models.Client;
-import levit104.isdb.coursework.models.order.Order;
+import levit104.isdb.coursework.models.Order;
 import levit104.isdb.coursework.repos.PaymentTypesRepository;
-import levit104.isdb.coursework.repos.order.OrdersRepository;
+import levit104.isdb.coursework.repos.OrdersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

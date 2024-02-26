@@ -1,8 +1,8 @@
-package levit104.isdb.coursework.repos.order;
+package levit104.isdb.coursework.repos;
 
 import levit104.isdb.coursework.models.Appliance;
 import levit104.isdb.coursework.models.Client;
-import levit104.isdb.coursework.models.order.Order;
+import levit104.isdb.coursework.models.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import levit104.isdb.coursework.models.order.Order;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;

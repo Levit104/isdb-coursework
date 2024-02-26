@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+// TODO Возможность продлить подписку, если срок истек
+//  Возможность отменить подписку
 @Controller
 @RequestMapping("/subscriptions")
 @RequiredArgsConstructor

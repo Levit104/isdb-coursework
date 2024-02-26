@@ -1,7 +1,7 @@
 package levit104.isdb.coursework.controllers;
 
 import jakarta.validation.Valid;
-import levit104.isdb.coursework.models.order.Order;
+import levit104.isdb.coursework.models.Order;
 import levit104.isdb.coursework.security.PersonDetails;
 import levit104.isdb.coursework.services.AppliancesService;
 import levit104.isdb.coursework.services.ClientsService;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 // TODO Невозможность создать заказ, если клиента вообще нет техники
 //  Невозможность создать заказ, если заказ на выбранную технику уже есть
+//  Возможность отменить заказ
+//  Возможность изменить дату заказа?
 @Controller
 @RequestMapping("/orders")
 @RequiredArgsConstructor

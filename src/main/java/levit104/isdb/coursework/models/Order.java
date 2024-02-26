@@ -1,11 +1,8 @@
-package levit104.isdb.coursework.models.order;
+package levit104.isdb.coursework.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import levit104.isdb.coursework.models.Appliance;
-import levit104.isdb.coursework.models.Client;
-import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;

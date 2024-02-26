@@ -3,7 +3,7 @@ package levit104.isdb.coursework.validation;
 
 import levit104.isdb.coursework.models.Day;
 import levit104.isdb.coursework.models.Repairman;
-import levit104.isdb.coursework.models.order.Order;
+import levit104.isdb.coursework.models.Order;
 import levit104.isdb.coursework.services.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
