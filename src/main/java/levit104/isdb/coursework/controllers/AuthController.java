@@ -24,11 +24,6 @@ public class AuthController {
         return "auth/login";
     }
 
-    @GetMapping("/registration")
-    public String registrationLinks() {
-        return "auth/registration";
-    }
-
     @GetMapping("/registration-client")
     public String registrationFormClient(@ModelAttribute("client") Client client) {
         return "auth/registration-client";

@@ -3,58 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Обновить профиль</title>
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{/repairmen/profile}" th:object="${repairman}">
-    <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
-    <label for="firstName">Имя: </label>
-    <input type="text" id="firstName" th:field="*{firstName}">
-    <br>
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
 
-    <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
-    <label for="lastName">Фамилия: </label>
-    <input type="text" id="lastName" th:field="*{lastName}">
-    <br>
+<div class="main">
+    <h1>Обновить профиль</h1>
 
-    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-    <label for="email">Адрес эл. почты: </label>
-    <input type="email" id="email" th:field="*{email}">
-    <br>
+    <form class="flex-form" th:method="PATCH" th:action="@{/repairmen/profile}" th:object="${repairman}">
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+            <input type="text" id="firstName" th:field="*{firstName}" placeholder="Имя" required>
+        </div>
 
-    <div class="error" th:if="${#fields.hasErrors('telNumber')}" th:errors="*{telNumber}"></div>
-    <label for="telNumber">Номер телефона: </label>
-    <input type="text" id="telNumber" th:field="*{telNumber}">
-    <br>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            <input type="text" id="lastName" th:field="*{lastName}" placeholder="Фамилия" required>
+        </div>
 
-    <div class="error" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></div>
-    <label for="experience">Опыт работы: </label>
-    <input type="number" id="experience" th:field="*{experience}">
-    <br>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <input type="email" id="email" th:field="*{email}" placeholder="Эл. почта" required>
+        </div>
 
-    <div class="error" th:if="${#fields.hasErrors('qualification')}" th:errors="*{qualification}"></div>
-    <label for="qualification">Квалификация: </label>
-    <input type="text" id="qualification" th:field="*{qualification}">
-    <br>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('telNumber')}" th:errors="*{telNumber}"></div>
+            <input type="text" id="telNumber" th:field="*{telNumber}" placeholder="Номер телефона" required>
+        </div>
 
-    <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
-    <label for="username">Имя пользователя: </label>
-    <input type="text" id="username" th:field="*{username}">
-    <br>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></div>
+            <input type="number" id="experience" th:field="*{experience}" placeholder="Стаж (лет)" required>
+        </div>
 
-    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-    <label for="password">Пароль: </label>
-    <input type="password" id="password" th:field="*{password}">
-    <br>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('qualification')}" th:errors="*{qualification}"></div>
+            <input type="text" id="qualification" th:field="*{qualification}" placeholder="Квалификация" required>
+        </div>
 
-    <br>
-    <input type="submit" value="Обновить">
-</form>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            <input type="text" id="username" th:field="*{username}" placeholder="Имя пользователя" required>
+        </div>
+
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <input type="password" id="password" th:field="*{password}" placeholder="Пароль" required>
+        </div>
+
+        <input type="submit" value="Сохранить изменения">
+    </form>
+</div>
 
 </body>
 </html>

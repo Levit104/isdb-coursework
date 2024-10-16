@@ -19,14 +19,9 @@ public class RepairmenController {
     private final PersonValidator personValidator;
     private final RepairmenService repairmenService;
 
-    @GetMapping("/main")
-    public String index() {
-        return "repairmen/main";
-    }
-
     @GetMapping
     public String showAll(Model model) {
-        model.addAttribute("repairmen", repairmenService.findAll());
+        model.addAttribute("repairmen", repairmenService.getAllWithNonEmptySchedule());
         return "repairmen/index";
     }
 

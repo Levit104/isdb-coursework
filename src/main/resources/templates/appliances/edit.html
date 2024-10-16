@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Обновить данные о технике</title>
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{'/appliances/' + ${appliance.id}}" th:object="${appliance}">
-    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-    <label for="name">Название: </label>
-    <input type="text" id="name" th:field="*{name}">
-    <br>
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
 
-    <div class="error" th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}"></div>
-    <label for="purchaseDate">Дата покупки: </label>
-    <input type="date" id="purchaseDate" th:field="*{purchaseDate}">
-    <br>
-
-    <div class="error" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
-    <label for="type">Тип техники: </label>
-    <select id="type" th:field="*{type}">
-        <option th:each="type : ${applianceTypes}" th:value="${type.id}" th:text="${type.name}"></option>
-    </select>
-    <br>
-
-    <br>
-    <input type="submit" value="Обновить">
-</form>
+<div class="main">
+    <h1>Обновить данные о технике</h1>
+    <form class="flex-form" th:method="PATCH" th:action="@{'/appliances/' + ${appliance.id}}" th:object="${appliance}">
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            <label class="span-bold" for="name">Название</label>
+            <input type="text" id="name" th:field="*{name}">
+        </div>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}"></div>
+            <label class="span-bold" for="purchaseDate">Дата покупки</label>
+            <input type="date" id="purchaseDate" th:field="*{purchaseDate}">
+        </div>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+            <label class="span-bold" for="type">Тип техники</label>
+            <select id="type" th:field="*{type}">
+                <option th:each="type : ${applianceTypes}" th:value="${type.id}" th:text="${type.name}"></option>
+            </select>
+        </div>
+        <input type="submit" value="Сохранить изменения">
+    </form>
+</div>
 
 </body>
 </html>

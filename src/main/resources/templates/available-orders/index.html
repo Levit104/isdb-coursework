@@ -2,20 +2,57 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Заказы</title>
+    <title>Доступные заказы</title>
     <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
+<!--<h2 th:if="${emptySchedule}" th:text="${emptySchedule}"></h2>-->
 
 <div class="main">
-    <h1>Заказы</h1>
-    <form th:method="GET" th:action="@{/orders/new}">
-        <input type="submit" value="Создать заказ">
-    </form>
-    <h2 th:if="${activeOrders.isEmpty()}">Активных заказов нет</h2>
+    <h2 th:if="${!nonTakenOrders.isEmpty()}">Доступные заказы</h2>
+    <h2 th:if="${nonTakenOrders.isEmpty()}">В данный момент доступных заказов нет</h2>
+    <div class="appliances-container" th:if="${!nonTakenOrders.isEmpty()}">
+        <div class="appliance" th:each="order : ${nonTakenOrders}">
+            <div class="order-num">
+                <span class="span-bold">Заказ №</span>
+                <span class="span-bold" th:text="${order.id}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Статус:</span>
+                <span th:text="${order.orderStatus.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Техника:</span>
+                <span th:text="${order.appliance.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата ремонта:</span>
+                <span th:text="${order.date}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Стоимость:</span>
+                <span th:text="${order.cost}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Оплата:</span>
+                <span th:text="${order.paymentType.name}"></span>
+            </div>
+            <div>
+                <p class="span-bold">Описание проблемы:</p>
+                <p th:text="${order.description}"></p>
+            </div>
+
+            <form class="main" th:method="PATCH" th:action="@{/available-orders/take}">
+                <input type="hidden" name="orderId" th:value="${order.id}"/>
+                <input type="submit" value="Принять">
+            </form>
+        </div>
+    </div>
+
     <h2 th:if="${!activeOrders.isEmpty()}">Активные заказы</h2>
+    <h2 th:if="${activeOrders.isEmpty()}">В данный момент активных заказов нет</h2>
     <div class="appliances-container" th:if="${!activeOrders.isEmpty()}">
         <div class="appliance" th:each="order : ${activeOrders}">
             <div class="order-num">
@@ -34,11 +71,7 @@
                 <span class="span-bold">Дата ремонта:</span>
                 <span th:text="${order.date}"></span>
             </div>
-            <div class="p-container" th:if="${order.repairman}">
-                <span class="span-bold">Мастер:</span>
-                <span th:text="${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></span>
-            </div>
-            <div class="p-container" th:if="${order.paymentType.name.equalsIgnoreCase('Безналичная')}">
+            <div class="p-container">
                 <span class="span-bold">Стоимость:</span>
                 <span th:text="${order.cost}"></span>
             </div>
@@ -46,15 +79,19 @@
                 <span class="span-bold">Оплата:</span>
                 <span th:text="${order.paymentType.name}"></span>
             </div>
-
             <div>
                 <p class="span-bold">Описание проблемы:</p>
                 <p th:text="${order.description}"></p>
             </div>
+            <form class="main" th:method="PATCH" th:action="@{/available-orders/finish}">
+                <input type="hidden" name="orderId" th:value="${order.id}"/>
+                <input type="submit" value="Завершить">
+            </form>
         </div>
     </div>
-    <h2 th:if="${finishedOrders.isEmpty()}">Завершённых заказов нет</h2>
+
     <h2 th:if="${!finishedOrders.isEmpty()}">Завершённые заказы</h2>
+    <h2 th:if="${finishedOrders.isEmpty()}">Завершённых заказов нет</h2>
     <div class="appliances-container" th:if="${!finishedOrders.isEmpty()}">
         <div class="appliance" th:each="order : ${finishedOrders}">
             <div class="order-num">
@@ -73,11 +110,7 @@
                 <span class="span-bold">Дата ремонта:</span>
                 <span th:text="${order.date}"></span>
             </div>
-            <div class="p-container" th:if="${order.repairman}">
-                <span class="span-bold">Мастер:</span>
-                <span th:text="${order.repairman.firstName} + ' ' + ${order.repairman.lastName}"></span>
-            </div>
-            <div class="p-container" th:if="${order.paymentType.name.equalsIgnoreCase('Безналичная')}">
+            <div class="p-container">
                 <span class="span-bold">Стоимость:</span>
                 <span th:text="${order.cost}"></span>
             </div>
@@ -89,21 +122,10 @@
                 <p class="span-bold">Описание проблемы:</p>
                 <p th:text="${order.description}"></p>
             </div>
-            <div class="p-container" th:if="${order.feedback}">
-                <span class="span-bold">Оценка</span>
-                <span th:text="${order.feedback.rating}"></span>
-            </div>
-            <div th:if="${order.feedback} and ${!order.feedback.description.isBlank()}">
-                <p class="span-bold">Отзыв:</p>
-                <p th:text="${order.feedback.description}"></p>
-            </div>
-            <form class="main" th:if="${order.feedback == null}" th:method="GET" th:action="@{/feedback/new}">
-                <input type="hidden" name="orderId" th:value="${order.id}"/>
-                <input class="update-button" type="submit" value="Оставить отзыв">
-            </form>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>

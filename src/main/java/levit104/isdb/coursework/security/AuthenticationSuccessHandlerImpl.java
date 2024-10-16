@@ -19,8 +19,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         Map<String, String> roleTargetUrlMap = new HashMap<>();
-        roleTargetUrlMap.put("ROLE_USER_CLIENT", "/clients/main");
-        roleTargetUrlMap.put("ROLE_USER_REPAIRMAN", "/repairmen/main");
+        roleTargetUrlMap.put("ROLE_USER_CLIENT", "/orders");
+        roleTargetUrlMap.put("ROLE_USER_REPAIRMAN", "/available-orders");
         roleTargetUrlMap.put("ROLE_ADMIN", "/");
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

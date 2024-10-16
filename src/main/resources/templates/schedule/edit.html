@@ -3,26 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Рабочий график</title>
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
 </head>
 <body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
 
 <form th:method="PUT" th:action="@{/schedule}">
     <div class="error" th:if="${scheduleError}" th:text="${scheduleError}"></div>
     <span>Рабочие дни: </span>
-    <div th:each="day : ${days}">
-        <input type="checkbox" th:name="selectedDaysIds" th:id="'day_' + ${day.id}" th:value="${day.id}"
-               th:checked="${scheduleIds != null and scheduleIds.contains(day.id)}">
-        <label th:for="'day_' + ${day.id}" th:text="${day.fullName}"></label>
-        <br>
+    <div>
+        <div th:each="day : ${days}">
+            <input type="checkbox" th:name="selectedDaysIds" th:id="'day_' + ${day.id}" th:value="${day.id}"
+                   th:checked="${scheduleIds != null and scheduleIds.contains(day.id)}">
+            <label th:for="'day_' + ${day.id}" th:text="${day.fullName}"></label>
+        </div>
     </div>
-    <br>
-
-    <br>
     <input type="submit" value="Сохранить"/>
 </form>
 

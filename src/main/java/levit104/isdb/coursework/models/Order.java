@@ -34,7 +34,7 @@ public class Order {
     @Column(nullable = false)
     private boolean active = true;
 
-    @NotNull(message = ErrorMessages.EMPTY_VALUE)
+    @NotNull(message = ErrorMessages.NO_APPLIANCES)
     @ManyToOne
     @JoinColumn(name = "appliance_id", referencedColumnName = "id", nullable = false)
     private Appliance appliance;
@@ -54,4 +54,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "order_status_id", referencedColumnName = "id", nullable = false)
     private OrderStatus orderStatus;
+
+    @OneToOne
+    @JoinColumn(name = "feedback_id", referencedColumnName = "id")
+    private Feedback feedback;
 }

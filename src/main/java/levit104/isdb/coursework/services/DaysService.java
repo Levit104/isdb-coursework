@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DaysService {
     private final DaysRepository daysRepository;
-    private final RepairmenService repairmenService;
 
     public List<Day> findAll() {
         return daysRepository.findAll();
@@ -29,8 +28,7 @@ public class DaysService {
     }
 
     @Transactional
-    public void saveSchedule(Integer repairmanId, List<Integer> selectedDaysIds) {
-        Repairman repairman = repairmenService.findById(repairmanId);
+    public void saveSchedule(Repairman repairman, List<Integer> selectedDaysIds) {
         List<Day> days = convertDaysIdsToDays(selectedDaysIds);
         repairman.setDays(days);
     }

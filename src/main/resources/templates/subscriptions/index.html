@@ -3,27 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Подписки</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<div th:if="${!activeSubscriptions.isEmpty()}">
-    <h2>Оформленные подписки</h2>
-    <div th:each="subscription : ${activeSubscriptions}">
-        <h3 th:text="${subscription.subscriptionPlan.name}"></h3>
-        <p th:text="'Стоимость: ' + ${subscription.subscriptionPlan.price}"></p>
-        <p th:text="'Дата начала: ' + ${subscription.startDate}"></p>
-        <p th:text="'Дата окончания: ' + ${subscription.endDate}"></p>
-        <hr>
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Подписки</h1>
+    <h2 th:if="${activeSubscriptions.isEmpty()}">Нет активных подписок</h2>
+    <h2 th:if="${!activeSubscriptions.isEmpty()}">Оформленные подписки</h2>
+
+    <form th:method="GET" th:action="@{/subscriptions/new}">
+        <input type="submit" value="Оформить подписку">
+    </form>
+
+    <div class="appliances-container" th:if="${!activeSubscriptions.isEmpty()}">
+        <div class="appliance" th:each="subscription : ${activeSubscriptions}">
+            <div class="order-num">
+                <span class="span-bold" th:text="${subscription.subscriptionPlan.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Стоимость:</span>
+                <span th:text="${subscription.subscriptionPlan.price}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата начала:</span>
+                <span th:text="${subscription.startDate}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата окончания:</span>
+                <span th:text="${subscription.endDate}"></span>
+            </div>
+            <div>
+                <span class="span-bold">Для следующей техники: </span>
+                <ul>
+                    <li th:each="type: ${subscription.subscriptionPlan.applianceTypes}" th:text="${type.name}"></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
-
-<div th:if="${activeSubscriptions.isEmpty()}">
-    <p>У вас нет активных подписок</p>
-</div>
-
-<form th:method="GET" th:action="@{/subscriptions/new}">
-    <input type="submit" value="Оформить подписку">
-</form>
 
 </body>
 </html>

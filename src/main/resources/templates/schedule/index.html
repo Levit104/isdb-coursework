@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Рабочий график</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<div th:each="day : ${schedule}">
-    <span th:text="${day.fullName}"></span>
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
+
+<div class="main">
+    <h1 th:if="${!schedule.isEmpty()}">Рабочий график</h1>
+    <h1 th:if="${schedule.isEmpty()}">Рабочий график не составлен</h1>
+
+    <div th:each="day : ${schedule}">
+        <span th:text="${day.fullName}"></span>
+    </div>
+
+    <form th:method="GET" th:action="@{/schedule/edit}">
+        <input type="submit" value="Обновить график">
+    </form>
 </div>
 
-<br>
-<form th:method="GET" th:action="@{/schedule/edit}">
-    <input type="submit" value="Обновить">
-</form>
 
 </body>
 </html>

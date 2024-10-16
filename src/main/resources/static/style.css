@@ -1,0 +1,163 @@
+ul {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05em;
+}
+
+input[type=submit].update-button {
+    background-color: #33363ac4;
+}
+
+input[type=submit].delete-button {
+    background-color: red;
+}
+
+.p-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.span-bold {
+    font-weight: bold;
+}
+
+.appliances-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.appliance {
+    border: 1px solid #dddddd;
+    padding: 10px;
+    background-color: white;
+    border-radius: 15px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+    width: 220px;
+    overflow-wrap: break-word;
+}
+
+
+.order-num {
+    display: flex;
+    justify-content: center;
+}
+
+
+body {
+    background: #f0f0f0;
+    font-family: sans-serif;
+}
+
+div,
+form,
+h1,
+h2,
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: end;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+.navigation-buttons a {
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.navigation-buttons a:hover {
+    background-color: #ddd;
+}
+
+.navigation-buttons a.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.main,
+.flex-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.flex-form2 {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.flex-form > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.25em;
+}
+
+.login-no-account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.styled-input {
+    margin: 0;
+    display: inline-block;
+    background-color: #f9f9f9;
+    width: 200px;
+    max-width: 100%;
+    padding: 12px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+}
+
+input {
+    width: 200px;
+    max-width: 100%;
+    padding: 12px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+}
+
+
+input[type=submit] {
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-color: #007aff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+    outline: 2px solid #007aff;
+}
+

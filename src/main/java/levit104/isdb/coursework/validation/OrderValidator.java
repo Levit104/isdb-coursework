@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -32,8 +31,8 @@ public class OrderValidator implements Validator {
         Order order = (Order) target;
         Repairman repairman = order.getRepairman();
 
-        Optional<Order> orderFromDB = ordersService.findByClientAndAppliance(order.getClient(), order.getAppliance());
-        if (orderFromDB.isPresent() && orderFromDB.get().isActive())
+        boolean orderExists = ordersService.existsByClientAndApplianceAndActive(order.getClient(), order.getAppliance(), true);
+        if (orderExists)
             errors.rejectValue("appliance", "", ErrorMessages.ORDER_FOR_APPLIANCE_EXISTS);
 
         if (order.getDate() != null) {

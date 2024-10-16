@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Логин</title>
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<form method="post" action="/process_login">
+<div class="main">
+    <h1>Вход в аккаунт</h1>
+
     <div class="error" th:if="${param.error}">
         <span>Некорректные имя пользователя и/или пароль</span>
     </div>
 
-    <label for="username">Имя пользователя: </label>
-    <input type="text" name="username" id="username">
-    <br>
+    <form class="flex-form" method="post" action="/process_login">
+<!--        <label for="username">Имя пользователя</label>-->
+        <input type="text" name="username" id="username" placeholder="Имя пользователя" required>
 
-    <label for="password">Пароль: </label>
-    <input type="password" name="password" id="password">
-    <br>
+<!--        <label for="password">Пароль</label>-->
+        <input type="password" name="password" id="password" placeholder="Пароль" required>
 
-    <input type="submit" value="Войти">
-</form>
+        <input type="submit" value="Войти">
+    </form>
 
-<br>
-<a th:href="@{/auth/registration-client}">Зарегистрироваться как клиент</a>
-<br>
-<a th:href="@{/auth/registration-repairman}">Зарегистрироваться как мастер</a>
+    <div class="login-no-account">
+        <span>Нет аккаунта?</span>
+        <a th:href="@{/auth/registration-client}">Зарегистрироваться как клиент</a>
+        <a th:href="@{/auth/registration-repairman}">Зарегистрироваться как мастер</a>
+    </div>
+</div>
 
 </body>
 </html>

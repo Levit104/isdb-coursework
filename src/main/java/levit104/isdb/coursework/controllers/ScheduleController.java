@@ -1,7 +1,9 @@
 package levit104.isdb.coursework.controllers;
 
+import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.security.PersonDetails;
 import levit104.isdb.coursework.services.DaysService;
+import levit104.isdb.coursework.services.RepairmenService;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleController {
     private final DaysService daysService;
+    private final RepairmenService repairmenService;
 
     @GetMapping
     public String show(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
@@ -40,7 +43,8 @@ public class ScheduleController {
 //            model.addAttribute("scheduleIds", daysService.getDaysIds(repairmanId));
             return "schedule/edit";
         }
-        daysService.saveSchedule(personDetails.getId(), selectedDaysIds);
+        Repairman repairman = repairmenService.findById(personDetails.getId());
+        daysService.saveSchedule(repairman, selectedDaysIds);
         return "redirect:/schedule";
     }
 }

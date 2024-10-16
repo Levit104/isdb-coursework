@@ -22,6 +22,7 @@ public class ApplianceValidator implements Validator {
         return Appliance.class.equals(clazz);
     }
 
+    // FIXME ошибка если прибор с таким же названием есть у другого пользователя
     @Override
     public void validate(@NonNull Object target, @NonNull Errors errors) {
         Appliance appliance = (Appliance) target;

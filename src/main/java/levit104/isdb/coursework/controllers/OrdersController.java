@@ -15,10 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-// TODO Невозможность создать заказ, если клиента вообще нет техники
-//  Невозможность создать заказ, если заказ на выбранную технику уже есть
-//  Возможность отменить заказ
-//  Возможность изменить дату заказа?
+// TODO Возможность отменить заказ
+// TODO Возможность изменить дату заказа?
 @Controller
 @RequestMapping("/orders")
 @RequiredArgsConstructor
@@ -31,14 +29,17 @@ public class OrdersController {
 
     @GetMapping
     public String showAll(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
-        model.addAttribute("orders", ordersService.findAllByClientId(personDetails.getId()));
+        Integer clientId = personDetails.getId();
+        model.addAttribute("activeOrders", ordersService.findAllByClientIdAndActive(clientId, true));
+        model.addAttribute("finishedOrders", ordersService.findAllByClientIdAndActive(clientId, false));
         return "orders/index";
     }
 
     @GetMapping("/new")
     public String createForm(@AuthenticationPrincipal PersonDetails personDetails,
                              @RequestParam(value = "repairmanId", required = false) Integer repairmanId,
-                             @ModelAttribute("order") Order order, Model model) {
+                             @ModelAttribute("order") Order order,
+                             Model model) {
         model.addAttribute("repairmanId", repairmanId);
         model.addAttribute("appliances", appliancesService.findAllByOwnerId(personDetails.getId()));
         return "orders/new";
@@ -61,7 +62,7 @@ public class OrdersController {
             return "orders/new";
         }
 
-        ordersService.save(order);
+        ordersService.create(order);
         return "redirect:/orders";
     }
 }

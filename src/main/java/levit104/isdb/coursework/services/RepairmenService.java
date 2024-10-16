@@ -21,6 +21,12 @@ public class RepairmenService {
         return repairmenRepository.findAll();
     }
 
+    public List<Repairman> getAllWithNonEmptySchedule() {
+        return findAll().stream()
+                .filter(repairman -> !repairman.getDays().isEmpty())
+                .toList();
+    }
+
     public Repairman findById(Integer id) {
         return repairmenRepository
                 .findById(id)

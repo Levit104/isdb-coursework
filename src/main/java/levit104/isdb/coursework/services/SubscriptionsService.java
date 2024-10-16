@@ -19,21 +19,16 @@ import java.util.List;
 public class SubscriptionsService {
     private final SubscriptionsRepository subscriptionsRepository;
     private final SubscriptionPlansRepository subscriptionPlansRepository;
-    private final ClientsService clientsService;
 
     public List<SubscriptionPlan> findAllPlans() {
         return subscriptionPlansRepository.findAll();
     }
 
-    public List<SubscriptionPlan> getAvailablePlans(Integer clientId) {
-        Client client = clientsService.findById(clientId);
-        List<SubscriptionPlan> allPlans = findAllPlans();
-
+    public List<SubscriptionPlan> getAvailablePlans(Client client) {
         List<SubscriptionPlan> clientPlans = client.getSubscriptions().stream()
                 .map(Subscription::getSubscriptionPlan)
                 .toList();
-
-        return allPlans.stream()
+        return findAllPlans().stream()
                 .filter(plan -> !clientPlans.contains(plan))
                 .toList();
     }
@@ -50,13 +45,13 @@ public class SubscriptionsService {
     }
 
     @Transactional
-    public void subscribe(Integer duration, Integer clientId, Integer planId) {
+    public void subscribe(Client client, Integer planId, Integer duration) {
         LocalDate currentDate = LocalDate.now();
 
         Subscription subscription = new Subscription(
                 currentDate,
                 currentDate.plusMonths(duration),
-                clientsService.findById(clientId),
+                client,
                 findPlanById(planId)
         );
 

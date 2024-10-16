@@ -19,11 +19,6 @@ public class ClientsController {
     private final PersonValidator personValidator;
     private final ClientsService clientsService;
 
-    @GetMapping("/main")
-    public String index() {
-        return "clients/main";
-    }
-
     @GetMapping("/profile")
     public String show(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
         model.addAttribute("client", clientsService.findById(personDetails.getId()));

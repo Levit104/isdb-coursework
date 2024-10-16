@@ -3,30 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Профиль</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<div>
-    <p th:text="${repairman.firstName + ' ' + repairman.lastName}"></p>
-    <p th:text="${repairman.email}"></p>
-    <p th:text="${repairman.telNumber}"></p>
-    <p th:text="${repairman.username}"></p>
-    <p th:text="${repairman.experience}"></p>
-    <p th:text="${repairman.qualification}"></p>
-    <p th:text="${repairman.rating}"></p>
-</div>
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
 
-<form th:method="GET" th:action="@{/repairmen/profile/edit}">
-    <input type="submit" value="Обновить">
-</form>
-<br>
-<form th:method="DELETE" th:action="@{/repairmen/profile}">
-    <input type="submit" value="Удалить">
-</form>
-<br>
-<form th:method="POST" th:action="@{/logout}">
-    <input type="submit" value="Выйти из аккаунта">
-</form>
+<div class="main">
+    <h1>Профиль</h1>
+
+    <div class="main">
+        <p class="styled-input" th:text="${repairman.firstName + ' ' + repairman.lastName}"></p>
+        <p class="styled-input" th:text="${repairman.email}"></p>
+        <p class="styled-input" th:text="${repairman.telNumber}"></p>
+        <p class="styled-input" th:text="${repairman.username}"></p>
+        <p class="styled-input" th:text="${repairman.experience}"></p>
+        <p class="styled-input" th:text="${repairman.qualification}"></p>
+        <p class="styled-input" th:text="${repairman.rating}"></p>
+    </div>
+
+    <form th:method="GET" th:action="@{/repairmen/profile/edit}">
+        <input type="submit" value="Обновить профиль">
+    </form>
+
+<!--    <form th:method="DELETE" th:action="@{/repairmen/profile}">-->
+<!--        <input type="submit" value="Удалить профиль">-->
+<!--    </form>-->
+</div>
 
 </body>
 </html>

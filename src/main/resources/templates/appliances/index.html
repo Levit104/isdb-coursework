@@ -3,33 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Ваша техника</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
-<div th:if="${!appliances.isEmpty()}">
-    <h2>Добавленная техника</h2>
-    <div th:each="appliance : ${appliances}">
-        <p th:text="${appliance.name}"></p>
-        <p th:text="${appliance.purchaseDate}"></p>
-        <p th:text="${appliance.type.name}"></p>
-        <form th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
-            <input type="submit" value="Обновить">
-        </form>
-        <br>
-        <form th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">
-            <input type="submit" value="Удалить">
-        </form>
-        <hr>
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Техника</h1>
+    <form th:method="GET" th:action="@{/appliances/new}">
+        <input type="submit" value="Добавить технику">
+    </form>
+    <div class="appliances-container">
+        <div class="appliance" th:each="appliance : ${appliances}">
+            <div class="p-container">
+                <span class="span-bold">Название:</span>
+                <span th:text="${appliance.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата покупки:</span>
+                <span th:text="${appliance.purchaseDate}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Тип:</span>
+                <span th:text="${appliance.type.name}"></span>
+            </div>
+            <form class="main" th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
+                <input class="update-button" type="submit" value="Обновить">
+            </form>
+<!--            <form class="main" th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">-->
+<!--                <input class="delete-button" type="submit" value="Удалить">-->
+<!--            </form>-->
+        </div>
     </div>
 </div>
-
-<div th:if="${appliances.isEmpty()}">
-    <p>У вас нет добавленной техники</p>
-</div>
-
-<form th:method="GET" th:action="@{/appliances/new}">
-    <input type="submit" value="Добавить технику">
-</form>
 
 </body>
 </html>

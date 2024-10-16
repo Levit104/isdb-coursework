@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface OrdersRepository extends JpaRepository<Order, Integer> {
-    List<Order> findAllByClientId(Integer clientId);
-    Optional<Order> findByClientAndAppliance(Client client, Appliance appliance);
+    List<Order> findByClientIdAndActive(Integer repairmanId, boolean active);
+
+    List<Order> findByRepairmanIdAndActive(Integer repairmanId, boolean active);
+
+    List<Order> findAllByRepairmanIsNull();
+
+    boolean existsByClientAndApplianceAndActive(Client client, Appliance appliance, boolean active);
 }
