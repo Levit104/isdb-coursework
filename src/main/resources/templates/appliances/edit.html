@@ -11,7 +11,9 @@
 
 <div class="main">
     <h1>Обновить данные о технике</h1>
-    <form class="flex-form" th:method="PATCH" th:action="@{'/appliances/' + ${appliance.id}}" th:object="${appliance}">
+    <form class="flex-form" th:method="PATCH" th:action="@{'/appliances/' + ${appliance.id}}" th:object="${appliance}" enctype="multipart/form-data">
+        <img th:if="${appliance.imageName}" th:src="@{${appliance.imageName}}" alt="">
+
         <div>
             <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             <label class="span-bold" for="name">Название</label>
@@ -28,6 +30,12 @@
             <select id="type" th:field="*{type}">
                 <option th:each="type : ${applianceTypes}" th:value="${type.id}" th:text="${type.name}"></option>
             </select>
+        </div>
+        <div>
+            <label class="span-bold" for="name">Изображение</label>
+            <input type="file" id="image" th:field="*{image}">
+<!--            <label class="span-bold" for="keepImage">Не удалять изображение?</label>-->
+<!--            <input type="checkbox" id="keepImage" th:checked="${appliance.keepImage}" />-->
         </div>
         <input type="submit" value="Сохранить изменения">
     </form>

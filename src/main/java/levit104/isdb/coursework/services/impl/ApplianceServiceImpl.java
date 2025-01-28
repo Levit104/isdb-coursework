@@ -6,6 +6,7 @@ import levit104.isdb.coursework.models.ApplianceType;
 import levit104.isdb.coursework.repos.ApplianceTypesRepository;
 import levit104.isdb.coursework.repos.AppliancesRepository;
 import levit104.isdb.coursework.services.ApplianceService;
+import levit104.isdb.coursework.services.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class ApplianceServiceImpl implements ApplianceService {
     private final AppliancesRepository appliancesRepository;
     private final ApplianceTypesRepository applianceTypesRepository;
+    private final ImageService imageService;
 
     @Override
     public List<ApplianceType> getAllTypes() {
@@ -27,11 +29,20 @@ public class ApplianceServiceImpl implements ApplianceService {
 
     @Override
     public List<Appliance> getAllByOwnerId(Integer ownerId) {
-        return appliancesRepository.findAllByOwnerId(ownerId);
+        var appliances = appliancesRepository.findAllByOwnerId(ownerId);
+        appliances.forEach(appliance ->
+                appliance.setImageName(imageService.generateImageUrl(appliance.getImageName())));
+        return appliances;
     }
 
     @Override
     public Appliance getById(Integer id) {
+        var appliance = getByIdWithRawImage(id);
+        appliance.setImageName(imageService.generateImageUrl(appliance.getImageName()));
+        return appliance;
+    }
+
+    private Appliance getByIdWithRawImage(Integer id) {
         return appliancesRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Техника с id=" + id + " не найдена"));
@@ -45,6 +56,20 @@ public class ApplianceServiceImpl implements ApplianceService {
     @Override
     @Transactional
     public void save(Appliance appliance) {
+        var image = appliance.getImage();
+
+        if (image != null && !image.isEmpty()) {
+            appliance.setImageName(imageService.save(image));
+        }
+
+        if (appliance.getId() != null) { // обновление существующего
+            var oldImageName = getByIdWithRawImage(appliance.getId()).getImageName();
+
+            if (oldImageName != null && appliance.getImageName() == null) {
+                appliance.setImageName(oldImageName);
+            }
+        }
+
         appliancesRepository.save(appliance);
     }
 
