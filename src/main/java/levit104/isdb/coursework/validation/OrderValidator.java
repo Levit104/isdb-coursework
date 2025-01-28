@@ -1,10 +1,9 @@
 package levit104.isdb.coursework.validation;
 
-
 import levit104.isdb.coursework.models.Day;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.models.Order;
-import levit104.isdb.coursework.services.OrdersService;
+import levit104.isdb.coursework.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import java.util.Locale;
 @Component
 @RequiredArgsConstructor
 public class OrderValidator implements Validator {
-    private final OrdersService ordersService;
+    private final OrderService orderService;
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
@@ -31,7 +30,10 @@ public class OrderValidator implements Validator {
         Order order = (Order) target;
         Repairman repairman = order.getRepairman();
 
-        boolean orderExists = ordersService.existsByClientAndApplianceAndActive(order.getClient(), order.getAppliance(), true);
+        if (order.getAppliance() == null)
+            errors.rejectValue("appliance", "", ErrorMessages.NO_APPLIANCES);
+
+        boolean orderExists = orderService.existsByClientAndApplianceAndActive(order.getClient(), order.getAppliance(), true);
         if (orderExists)
             errors.rejectValue("appliance", "", ErrorMessages.ORDER_FOR_APPLIANCE_EXISTS);
 

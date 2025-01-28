@@ -13,4 +13,5 @@ public class ErrorMessages {
     public static final String REPAIRMAN_NOT_WORKING_DAY = "Выбранный мастер не работает в этот день недели";
     public static final String ORDER_FOR_APPLIANCE_EXISTS = "Заказ на данную технику уже есть";
     public static final String NO_APPLIANCES = "Техника не выбрана (возможно вы не добавили ни одной техники)";
+    public static final String APPLIANCE_IN_ORDER = "Невозможно удалить данную технику, т.к. на нее создан заказ";
 }

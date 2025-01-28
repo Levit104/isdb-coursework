@@ -31,9 +31,11 @@
             <form class="main" th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
                 <input class="update-button" type="submit" value="Обновить">
             </form>
-<!--            <form class="main" th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">-->
-<!--                <input class="delete-button" type="submit" value="Удалить">-->
-<!--            </form>-->
+            <form class="main" th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">
+                <input class="delete-button" type="submit" value="Удалить">
+            </form>
+
+            <div class="error" th:if="${inOrder != null && inOrderId == appliance.id}" th:text="${inOrder}"></div>
         </div>
     </div>
 </div>

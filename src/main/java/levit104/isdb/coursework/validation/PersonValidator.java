@@ -1,7 +1,7 @@
 package levit104.isdb.coursework.validation;
 
 import levit104.isdb.coursework.models.Person;
-import levit104.isdb.coursework.services.PeopleService;
+import levit104.isdb.coursework.services.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import static levit104.isdb.coursework.validation.ErrorMessages.*;
 @Component
 @RequiredArgsConstructor
 public class PersonValidator implements Validator {
-    private final PeopleService peopleService;
+    private final PersonService personService;
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
@@ -29,15 +29,15 @@ public class PersonValidator implements Validator {
         Optional<Person> personFromDB;
 
         // проверки ID нужны для корректной работы обновления профиля
-        personFromDB = peopleService.findByEmail(person.getEmail());
+        personFromDB = personService.findByEmail(person.getEmail());
         if (personFromDB.isPresent() && !Objects.equals(person.getId(), personFromDB.get().getId()))
             errors.rejectValue("email", "", EMAIL_TAKEN);
 
-        personFromDB = peopleService.findByTelNumber(person.getTelNumber());
+        personFromDB = personService.findByTelNumber(person.getTelNumber());
         if (personFromDB.isPresent() && !Objects.equals(person.getId(), personFromDB.get().getId()))
             errors.rejectValue("telNumber", "", TEL_NUMBER_TAKEN);
 
-        personFromDB = peopleService.findByUsername(person.getUsername());
+        personFromDB = personService.findByUsername(person.getUsername());
         if (personFromDB.isPresent() && !Objects.equals(person.getId(), personFromDB.get().getId()))
             errors.rejectValue("username", "", USERNAME_TAKEN);
     }

@@ -161,3 +161,7 @@ input[type=password]:focus {
     outline: 2px solid #007aff;
 }
 
+.checkbox-container {
+    display: inline-block;
+    margin-right: 10px;
+}

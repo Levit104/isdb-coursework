@@ -22,7 +22,7 @@
     <div>
         <div class="error" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
         <label class="span-bold" for="rating">Оценка: </label>
-        <input type="number" id="rating" th:field="*{rating}">
+        <input type="number" min="1" max="5" id="rating" th:field="*{rating}">
     </div>
 
     <input type="submit" value="Сохранить">

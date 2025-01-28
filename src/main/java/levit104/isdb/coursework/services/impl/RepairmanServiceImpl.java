@@ -1,8 +1,9 @@
-package levit104.isdb.coursework.services;
+package levit104.isdb.coursework.services.impl;
 
 import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.repos.RepairmenRepository;
+import levit104.isdb.coursework.services.RepairmanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,35 +14,41 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class RepairmenService {
+public class RepairmanServiceImpl implements RepairmanService {
     private final RepairmenRepository repairmenRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public List<Repairman> findAll() {
+    @Override
+    public List<Repairman> getAll() {
         return repairmenRepository.findAll();
     }
 
+    @Override
     public List<Repairman> getAllWithNonEmptySchedule() {
-        return findAll().stream()
+        return getAll().stream()
                 .filter(repairman -> !repairman.getDays().isEmpty())
                 .toList();
     }
 
-    public Repairman findById(Integer id) {
+    @Override
+    public Repairman getById(Integer id) {
         return repairmenRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Пользователь с id=" + id + " не найден"));
     }
 
-    public Repairman findByIdForOrder(Integer id) {
-        return id == null ? null : findById(id);
+    @Override
+    public Repairman getByIdForOrder(Integer id) {
+        return id == null ? null : getById(id);
     }
 
+    @Override
     @Transactional
     public void deleteById(Integer id) {
         repairmenRepository.deleteById(id);
     }
 
+    @Override
     @Transactional
     public void save(Repairman repairman) {
         repairman.setPassword(passwordEncoder.encode(repairman.getPassword()));

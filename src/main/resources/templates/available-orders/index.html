@@ -122,6 +122,18 @@
                 <p class="span-bold">Описание проблемы:</p>
                 <p th:text="${order.description}"></p>
             </div>
+            <div class="p-container" th:if="${order.feedback}">
+                <span class="span-bold">Оценка</span>
+                <span th:text="${order.feedback.rating}"></span>
+            </div>
+            <div th:if="${order.feedback} and ${!order.feedback.description.isBlank()}">
+                <p class="span-bold">Отзыв:</p>
+                <p th:text="${order.feedback.description}"></p>
+            </div>
+            <form class="main" th:if="${order.feedback == null}" th:method="GET" th:action="@{/feedback/new}">
+                <input type="hidden" name="orderId" th:value="${order.id}"/>
+                <input class="update-button" type="submit" value="Оставить отзыв">
+            </form>
         </div>
     </div>
 </div>

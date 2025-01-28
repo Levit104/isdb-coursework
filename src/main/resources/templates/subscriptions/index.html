@@ -41,6 +41,9 @@
                     <li th:each="type: ${subscription.subscriptionPlan.applianceTypes}" th:text="${type.name}"></li>
                 </ul>
             </div>
+            <form class="main" th:method="DELETE" th:action="@{'/subscriptions/' + ${subscription.id}}">
+                <input class="delete-button" type="submit" value="Отменить">
+            </form>
         </div>
     </div>
 </div>

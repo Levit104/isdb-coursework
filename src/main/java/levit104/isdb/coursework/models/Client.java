@@ -20,7 +20,6 @@ public class Client extends Person {
     @Column(nullable = false)
     private String address;
 
-    // TODO каскадирование
     @OneToMany(mappedBy = "owner")
     private List<Appliance> appliances;
 

@@ -1,7 +1,7 @@
 package levit104.isdb.coursework.validation;
 
 import levit104.isdb.coursework.models.Appliance;
-import levit104.isdb.coursework.services.AppliancesService;
+import levit104.isdb.coursework.services.ApplianceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -15,18 +15,17 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class ApplianceValidator implements Validator {
-    private final AppliancesService appliancesService;
+    private final ApplianceService applianceService;
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
         return Appliance.class.equals(clazz);
     }
 
-    // FIXME ошибка если прибор с таким же названием есть у другого пользователя
     @Override
     public void validate(@NonNull Object target, @NonNull Errors errors) {
         Appliance appliance = (Appliance) target;
-        Optional<Appliance> applianceFromDB = appliancesService.findByName(appliance.getName());
+        Optional<Appliance> applianceFromDB = applianceService.findByName(appliance.getName());
 
         if (applianceFromDB.isPresent()
                 && Objects.equals(appliance.getOwner().getId(), applianceFromDB.get().getOwner().getId())

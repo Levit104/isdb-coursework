@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отзывы</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
+
+<div class="main">
+    <h1>Отзывы</h1>
+    <h2 th:if="${feedbacks.isEmpty()}">Нет отзывов</h2>
+    <h2 th:if="${!feedbacks.isEmpty()}">Отзывы</h2>
+
+    <div class="appliances-container" th:if="${!feedbacks.isEmpty()}">
+        <div class="appliance" th:each="feedback : ${feedbacks}">
+            <div class="order-num">
+                <span class="span-bold">Отзыв на заказ №</span>
+                <span class="span-bold" th:text="${feedback.order.id}"></span>
+            </div>
+            <div th:if="${!feedback.description.isBlank()}">
+                <p class="span-bold">Описание:</p>
+                <p th:text="${feedback.description}"></p>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Оценка</span>
+                <span th:text="${feedback.rating}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата отзыва:</span>
+                <span th:text="${feedback.publishDate}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
