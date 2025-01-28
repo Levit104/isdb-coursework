@@ -3,7 +3,6 @@ package levit104.isdb.coursework.services.impl;
 import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.Appliance;
 import levit104.isdb.coursework.models.ApplianceType;
-import levit104.isdb.coursework.models.Order;
 import levit104.isdb.coursework.repos.ApplianceTypesRepository;
 import levit104.isdb.coursework.repos.AppliancesRepository;
 import levit104.isdb.coursework.services.ApplianceService;

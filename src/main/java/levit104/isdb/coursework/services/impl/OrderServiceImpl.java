@@ -2,7 +2,6 @@ package levit104.isdb.coursework.services.impl;
 
 import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.*;
-import levit104.isdb.coursework.repos.FeedbackRepository;
 import levit104.isdb.coursework.repos.PaymentTypesRepository;
 import levit104.isdb.coursework.repos.OrdersRepository;
 import levit104.isdb.coursework.services.OrderService;
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
