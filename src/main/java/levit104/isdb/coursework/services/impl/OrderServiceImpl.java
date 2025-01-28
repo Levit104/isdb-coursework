@@ -1,10 +1,11 @@
-package levit104.isdb.coursework.services;
+package levit104.isdb.coursework.services.impl;
 
 import levit104.isdb.coursework.exceptions.EntityNotFoundException;
 import levit104.isdb.coursework.models.*;
 import levit104.isdb.coursework.repos.FeedbackRepository;
 import levit104.isdb.coursework.repos.PaymentTypesRepository;
 import levit104.isdb.coursework.repos.OrdersRepository;
+import levit104.isdb.coursework.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,40 +17,44 @@ import java.util.Random;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class OrdersService {
+public class OrderServiceImpl implements OrderService {
     private final OrdersRepository ordersRepository;
     private final PaymentTypesRepository paymentTypesRepository;
-    private final FeedbackRepository feedbackRepository;
 
-    public Order findById(Integer id) {
+    @Override
+    public Order getById(Integer id) {
         return ordersRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Заказ с id=" + id + " не найден"));
     }
 
-    public List<Order> findAllByClientIdAndActive(Integer clientId, boolean active) {
+    @Override
+    public List<Order> getAllByClientIdAndActive(Integer clientId, boolean active) {
         return ordersRepository.findByClientIdAndActive(clientId, active);
     }
 
-    public List<Order> findByRepairmanIdAndActive(Integer repairmanId, boolean active) {
+    @Override
+    public List<Order> getAllByRepairmanIdAndActive(Integer repairmanId, boolean active) {
         return ordersRepository.findByRepairmanIdAndActive(repairmanId, active);
     }
 
-    public List<Order> findAllWithoutRepairman() {
+    @Override
+    public List<Order> getAllWithoutRepairman() {
         return ordersRepository.findAllByRepairmanIsNull();
     }
 
+    @Override
     public boolean existsByClientAndApplianceAndActive(Client client, Appliance appliance, boolean active) {
         return ordersRepository.existsByClientAndApplianceAndActive(client, appliance, active);
     }
 
+    @Override
     @Transactional
     public void create(Order order) {
         boolean subscribed = order.getClient().getSubscriptions()
                 .stream()
                 .anyMatch(s -> s.getSubscriptionPlan().equals(order.getAppliance().getType().getSubscriptionPlan()));
 
-//        FIXME заменить null???
         if (subscribed)
             order.setPaymentType(paymentTypesRepository.findByName("Подписка").orElse(null));
         else
@@ -58,39 +63,28 @@ public class OrdersService {
         int cost = randomCost();
         order.setCost(cost);
 
+        save(order);
+    }
+
+    @Override
+    public void save(Order order) {
         ordersRepository.save(order);
     }
 
+    @Override
     @Transactional
     public void takeOrder(Integer orderId, Repairman repairman) {
-        Order order = findById(orderId);
+        Order order = getById(orderId);
         order.setRepairman(repairman);
-        ordersRepository.save(order);
+        save(order);
     }
 
+    @Override
     @Transactional
     public void finishOrder(Integer orderId) {
-        Order order = findById(orderId);
+        Order order = getById(orderId);
         order.setActive(false);
-        ordersRepository.save(order);
-    }
-
-    public List<Feedback> findAllFeedbacksByClientId(Integer clientId) {
-        return feedbackRepository.findAllByOrder_Client_Id(clientId);
-    }
-
-    public List<Feedback> findAllFeedbacksByRepairmanId(Integer repairmanId) {
-        return feedbackRepository.findAllByOrder_Repairman_Id(repairmanId);
-    }
-
-    @Transactional
-    public void addFeedback(Integer orderId, Feedback feedback) {
-        feedback.setPublishDate(LocalDate.now());
-        feedbackRepository.save(feedback);
-
-        Order order = findById(orderId);
-        order.setFeedback(feedback);
-        ordersRepository.save(order);
+        save(order);
     }
 
     private int randomCost() {

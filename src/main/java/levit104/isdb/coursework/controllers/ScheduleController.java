@@ -2,8 +2,8 @@ package levit104.isdb.coursework.controllers;
 
 import levit104.isdb.coursework.models.Repairman;
 import levit104.isdb.coursework.security.PersonDetails;
-import levit104.isdb.coursework.services.DaysService;
-import levit104.isdb.coursework.services.RepairmenService;
+import levit104.isdb.coursework.services.DayService;
+import levit104.isdb.coursework.services.RepairmanService;
 import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,19 +17,19 @@ import java.util.List;
 @RequestMapping("/schedule")
 @RequiredArgsConstructor
 public class ScheduleController {
-    private final DaysService daysService;
-    private final RepairmenService repairmenService;
+    private final DayService dayService;
+    private final RepairmanService repairmanService;
 
     @GetMapping
     public String show(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
-        model.addAttribute("schedule", daysService.findAllByRepairmanId(personDetails.getId()));
+        model.addAttribute("schedule", dayService.getAllByRepairmanId(personDetails.getId()));
         return "schedule/index";
     }
 
     @GetMapping("/edit")
     public String editForm(@AuthenticationPrincipal PersonDetails personDetails, Model model) {
-        model.addAttribute("days", daysService.findAll());
-        model.addAttribute("scheduleIds", daysService.getDaysIds(personDetails.getId()));
+        model.addAttribute("days", dayService.getAll());
+        model.addAttribute("scheduleIds", dayService.getDaysIds(personDetails.getId()));
         return "schedule/edit";
     }
 
@@ -39,12 +39,12 @@ public class ScheduleController {
                        Model model) {
         if (selectedDaysIds == null) {
             model.addAttribute("scheduleError", ErrorMessages.EMPTY_SCHEDULE);
-            model.addAttribute("days", daysService.findAll());
-//            model.addAttribute("scheduleIds", daysService.getDaysIds(repairmanId));
+            model.addAttribute("days", dayService.getAll());
+//            model.addAttribute("scheduleIds", dayService.getDaysIds(repairmanId));
             return "schedule/edit";
         }
-        Repairman repairman = repairmenService.findById(personDetails.getId());
-        daysService.saveSchedule(repairman, selectedDaysIds);
+        Repairman repairman = repairmanService.getById(personDetails.getId());
+        dayService.saveSchedule(repairman, selectedDaysIds);
         return "redirect:/schedule";
     }
 }

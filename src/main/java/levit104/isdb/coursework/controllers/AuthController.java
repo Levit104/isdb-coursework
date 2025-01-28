@@ -3,8 +3,8 @@ package levit104.isdb.coursework.controllers;
 import jakarta.validation.Valid;
 import levit104.isdb.coursework.models.Client;
 import levit104.isdb.coursework.models.Repairman;
-import levit104.isdb.coursework.services.ClientsService;
-import levit104.isdb.coursework.services.RepairmenService;
+import levit104.isdb.coursework.services.ClientService;
+import levit104.isdb.coursework.services.RepairmanService;
 import levit104.isdb.coursework.validation.PersonValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final PersonValidator personValidator;
-    private final ClientsService clientsService;
-    private final RepairmenService repairmenService;
+    private final ClientService clientService;
+    private final RepairmanService repairmanService;
 
     @GetMapping("/login")
     public String loginForm() {
@@ -31,11 +31,11 @@ public class AuthController {
 
     @PostMapping("/registration-client")
     public String registrationClient(@ModelAttribute("client") @Valid Client client,
-                                           BindingResult bindingResult) {
+                                     BindingResult bindingResult) {
         personValidator.validate(client, bindingResult);
         if (bindingResult.hasErrors())
             return "auth/registration-client";
-        clientsService.save(client);
+        clientService.save(client);
         return "redirect:/auth/login";
     }
 
@@ -46,11 +46,11 @@ public class AuthController {
 
     @PostMapping("/registration-repairman")
     public String registrationRepairman(@ModelAttribute("repairman") @Valid Repairman repairman,
-                                              BindingResult bindingResult) {
+                                        BindingResult bindingResult) {
         personValidator.validate(repairman, bindingResult);
         if (bindingResult.hasErrors())
             return "auth/registration-repairman";
-        repairmenService.save(repairman);
+        repairmanService.save(repairman);
         return "redirect:/auth/login";
     }
 }

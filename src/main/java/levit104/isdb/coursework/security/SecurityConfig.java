@@ -26,7 +26,8 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").anonymous()
                         .requestMatchers("/clients/**", "/appliances/**", "/orders/**",
                                 "/subscriptions/**", "/repairmen").hasAuthority("ROLE_USER_CLIENT")
-                        .requestMatchers("/repairmen/**", "/schedule/**").hasAuthority("ROLE_USER_REPAIRMAN")
+                        .requestMatchers("/repairmen/**", "/schedule/**", "/available-orders/**",
+                                "/available-feedback/**").hasAuthority("ROLE_USER_REPAIRMAN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin

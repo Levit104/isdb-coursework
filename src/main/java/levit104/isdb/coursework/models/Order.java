@@ -34,9 +34,10 @@ public class Order {
     @Column(nullable = false)
     private boolean active = true;
 
-    @NotNull(message = ErrorMessages.NO_APPLIANCES)
+//    Для удаления техники
+//    @NotNull(message = ErrorMessages.NO_APPLIANCES)
     @ManyToOne
-    @JoinColumn(name = "appliance_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "appliance_id", referencedColumnName = "id"/*, nullable = false*/)
     private Appliance appliance;
 
     @ManyToOne

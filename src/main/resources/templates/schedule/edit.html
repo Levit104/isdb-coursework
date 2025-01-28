@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="../../static/style.css"/>
     <meta charset="UTF-8">
     <title>Рабочий график</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
 
 <th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
 
-<form th:method="PUT" th:action="@{/schedule}">
-    <div class="error" th:if="${scheduleError}" th:text="${scheduleError}"></div>
-    <span>Рабочие дни: </span>
-    <div>
-        <div th:each="day : ${days}">
+<div class="main">
+    <h1>Обновить рабочее расписание</h1>
+
+    <form class="flex-form" th:method="PUT" th:action="@{/schedule}">
+        <div class="error" th:if="${scheduleError}" th:text="${scheduleError}"></div>
+        <div class="checkbox-container" th:each="day : ${days}">
             <input type="checkbox" th:name="selectedDaysIds" th:id="'day_' + ${day.id}" th:value="${day.id}"
                    th:checked="${scheduleIds != null and scheduleIds.contains(day.id)}">
             <label th:for="'day_' + ${day.id}" th:text="${day.fullName}"></label>
         </div>
-    </div>
-    <input type="submit" value="Сохранить"/>
-</form>
+        <input type="submit" value="Сохранить"/>
+    </form>
+</div>
 
 </body>
 </html>

@@ -122,7 +122,7 @@ BEGIN
     ELSIF NEW.repairman_id IS NOT NULL THEN
         NEW.order_status_id = (SELECT id FROM order_status WHERE name = 'Завершён');
     ELSE
-        RAISE EXCEPTION 'Error: Setting active to false with null repairman_id';
+        NEW.order_status_id = (SELECT id FROM order_status WHERE name = 'Отменён');
     END IF;
     RETURN NEW;
 END;
@@ -135,6 +135,7 @@ CREATE TRIGGER set_order_status
 insert into order_status(name) values
 ('Поиск мастера'),
 ('Выполняется'),
+('Отменён'),
 ('Завершён');
 
 insert into payment_type(name) values
