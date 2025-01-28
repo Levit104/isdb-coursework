@@ -7,6 +7,7 @@ import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,6 +41,12 @@ public class Appliance {
 
     @OneToMany(mappedBy = "appliance")
     private List<Order> orders;
+
+    @Column(unique = true)
+    private String imageName;
+
+    @Transient
+    private MultipartFile image;
 }
 
 

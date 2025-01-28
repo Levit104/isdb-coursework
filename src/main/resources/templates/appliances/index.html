@@ -16,6 +16,8 @@
     </form>
     <div class="appliances-container">
         <div class="appliance" th:each="appliance : ${appliances}">
+            <img th:if="${appliance.imageName}" th:src="@{${appliance.imageName}}" alt="">
+
             <div class="p-container">
                 <span class="span-bold">Название:</span>
                 <span th:text="${appliance.name}"></span>
