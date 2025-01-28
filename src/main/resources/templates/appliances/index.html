@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваша техника</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Техника</h1>
+    <form th:method="GET" th:action="@{/appliances/new}">
+        <input type="submit" value="Добавить технику">
+    </form>
+    <div class="appliances-container">
+        <div class="appliance" th:each="appliance : ${appliances}">
+            <div class="p-container">
+                <span class="span-bold">Название:</span>
+                <span th:text="${appliance.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата покупки:</span>
+                <span th:text="${appliance.purchaseDate}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Тип:</span>
+                <span th:text="${appliance.type.name}"></span>
+            </div>
+            <form class="main" th:method="GET" th:action="@{'/appliances/' + ${appliance.id} + '/edit'}">
+                <input class="update-button" type="submit" value="Обновить">
+            </form>
+<!--            <form class="main" th:method="DELETE" th:action="@{'/appliances/' + ${appliance.id}}">-->
+<!--                <input class="delete-button" type="submit" value="Удалить">-->
+<!--            </form>-->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

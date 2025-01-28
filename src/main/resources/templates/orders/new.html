@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать заказ</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Создать заказ</h1>
+    <form class="flex-form" th:method="POST" th:action="@{/orders}" th:object="${order}">
+        <input type="hidden" name="repairmanId" th:value="${repairmanId}">
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+            <label class="span-bold" for="description">Описание проблемы:</label>
+<!--            <input type="text" id="description" th:field="*{description}">-->
+            <textarea name="description" id="description" cols="30" rows="10" th:field="*{description}"></textarea>
+        </div>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+            <label class="span-bold" for="date">Дата прихода мастера:</label>
+            <input type="date" id="date" th:field="*{date}">
+        </div>
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('appliance')}" th:errors="*{appliance}"></div>
+            <label class="span-bold" for="appliance">Техника:</label>
+            <select id="appliance" th:field="*{appliance}">
+                <option th:each="appliance : ${appliances}" th:value="${appliance.id}" th:text="${appliance.name}"></option>
+            </select>
+        </div>
+        <input type="submit" value="Создать">
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оформить подписку</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Оформление подписки</h1>
+    <h2 th:if="${subscriptionPlans.isEmpty()}">Вы оформили все возможные подписки!</h2>
+    <h2 th:if="${!subscriptionPlans.isEmpty()}">Доступные подписки</h2>
+</div>
+
+
+<div class="appliances-container" th:if="${!subscriptionPlans.isEmpty()}">
+    <div class="appliance" th:each="plan : ${subscriptionPlans}">
+        <div class="order-num">
+            <span class="span-bold" th:text="${plan.name}"></span>
+        </div>
+        <div class="p-container">
+            <span class="span-bold">Стоимость:</span>
+            <span th:text="${plan.price}"></span>
+        </div>
+
+        <div>
+            <span class="span-bold">Для следующей техники: </span>
+            <ul>
+                <li th:each="type: ${plan.applianceTypes}" th:text="${type.name}"></li>
+            </ul>
+        </div>
+
+        <form class="flex-form2" th:method="POST" th:action="@{/subscriptions}">
+            <div class="p-container">
+                <input type="hidden" name="planId" th:value="${plan.id}"/>
+                <label class="span-bold" for="duration">Срок:</label>
+                <select name="duration" id="duration">
+                    <option value="1">1 месяц</option>
+                    <option value="3">3 месяца</option>
+                    <option value="6">6 месяцев</option>
+                    <option value="12">1 год</option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Оформить">
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+
+</body>
+</html>

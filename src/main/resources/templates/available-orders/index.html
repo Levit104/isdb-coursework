@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Доступные заказы</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
+<!--<h2 th:if="${emptySchedule}" th:text="${emptySchedule}"></h2>-->
+
+<div class="main">
+    <h2 th:if="${!nonTakenOrders.isEmpty()}">Доступные заказы</h2>
+    <h2 th:if="${nonTakenOrders.isEmpty()}">В данный момент доступных заказов нет</h2>
+    <div class="appliances-container" th:if="${!nonTakenOrders.isEmpty()}">
+        <div class="appliance" th:each="order : ${nonTakenOrders}">
+            <div class="order-num">
+                <span class="span-bold">Заказ №</span>
+                <span class="span-bold" th:text="${order.id}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Статус:</span>
+                <span th:text="${order.orderStatus.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Техника:</span>
+                <span th:text="${order.appliance.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата ремонта:</span>
+                <span th:text="${order.date}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Стоимость:</span>
+                <span th:text="${order.cost}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Оплата:</span>
+                <span th:text="${order.paymentType.name}"></span>
+            </div>
+            <div>
+                <p class="span-bold">Описание проблемы:</p>
+                <p th:text="${order.description}"></p>
+            </div>
+
+            <form class="main" th:method="PATCH" th:action="@{/available-orders/take}">
+                <input type="hidden" name="orderId" th:value="${order.id}"/>
+                <input type="submit" value="Принять">
+            </form>
+        </div>
+    </div>
+
+    <h2 th:if="${!activeOrders.isEmpty()}">Активные заказы</h2>
+    <h2 th:if="${activeOrders.isEmpty()}">В данный момент активных заказов нет</h2>
+    <div class="appliances-container" th:if="${!activeOrders.isEmpty()}">
+        <div class="appliance" th:each="order : ${activeOrders}">
+            <div class="order-num">
+                <span class="span-bold">Заказ №</span>
+                <span class="span-bold" th:text="${order.id}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Статус:</span>
+                <span th:text="${order.orderStatus.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Техника:</span>
+                <span th:text="${order.appliance.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата ремонта:</span>
+                <span th:text="${order.date}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Стоимость:</span>
+                <span th:text="${order.cost}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Оплата:</span>
+                <span th:text="${order.paymentType.name}"></span>
+            </div>
+            <div>
+                <p class="span-bold">Описание проблемы:</p>
+                <p th:text="${order.description}"></p>
+            </div>
+            <form class="main" th:method="PATCH" th:action="@{/available-orders/finish}">
+                <input type="hidden" name="orderId" th:value="${order.id}"/>
+                <input type="submit" value="Завершить">
+            </form>
+        </div>
+    </div>
+
+    <h2 th:if="${!finishedOrders.isEmpty()}">Завершённые заказы</h2>
+    <h2 th:if="${finishedOrders.isEmpty()}">Завершённых заказов нет</h2>
+    <div class="appliances-container" th:if="${!finishedOrders.isEmpty()}">
+        <div class="appliance" th:each="order : ${finishedOrders}">
+            <div class="order-num">
+                <span class="span-bold">Заказ №</span>
+                <span class="span-bold" th:text="${order.id}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Статус:</span>
+                <span th:text="${order.orderStatus.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Техника:</span>
+                <span th:text="${order.appliance.name}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Дата ремонта:</span>
+                <span th:text="${order.date}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Стоимость:</span>
+                <span th:text="${order.cost}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Оплата:</span>
+                <span th:text="${order.paymentType.name}"></span>
+            </div>
+            <div>
+                <p class="span-bold">Описание проблемы:</p>
+                <p th:text="${order.description}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

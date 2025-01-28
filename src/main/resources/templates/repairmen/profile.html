@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-repairman"></th:block>
+
+<div class="main">
+    <h1>Профиль</h1>
+
+    <div class="main">
+        <p class="styled-input" th:text="${repairman.firstName + ' ' + repairman.lastName}"></p>
+        <p class="styled-input" th:text="${repairman.email}"></p>
+        <p class="styled-input" th:text="${repairman.telNumber}"></p>
+        <p class="styled-input" th:text="${repairman.username}"></p>
+        <p class="styled-input" th:text="${repairman.experience}"></p>
+        <p class="styled-input" th:text="${repairman.qualification}"></p>
+        <p class="styled-input" th:text="${repairman.rating}"></p>
+    </div>
+
+    <form th:method="GET" th:action="@{/repairmen/profile/edit}">
+        <input type="submit" value="Обновить профиль">
+    </form>
+
+<!--    <form th:method="DELETE" th:action="@{/repairmen/profile}">-->
+<!--        <input type="submit" value="Удалить профиль">-->
+<!--    </form>-->
+</div>
+
+</body>
+</html>

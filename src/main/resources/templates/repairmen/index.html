@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мастера</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Мастера</h1>
+    <h2 th:if="${repairmen.isEmpty()}">В данный момент заказ с выбором мастера недоступен</h2>
+    <h2 th:if="${!repairmen.isEmpty()}">Доступные мастера</h2>
+    <div class="appliances-container" th:if="${!repairmen.isEmpty()}">
+        <div class="appliance" th:each="repairman : ${repairmen}">
+            <div class="p-container">
+                <span class="span-bold">Имя:</span>
+                <span th:text="${repairman.firstName} + ' ' + ${repairman.lastName}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Стаж (лет):</span>
+                <span th:text="${repairman.experience}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Квалификация:</span>
+                <span th:text="${repairman.qualification}"></span>
+            </div>
+            <div class="p-container">
+                <span class="span-bold">Рабочий график:</span>
+                <span th:text="${repairman.scheduleString()}"></span>
+            </div>
+            <form class="main" th:method="GET" th:action="@{/orders/new}">
+                <input type="hidden" name="repairmanId" th:value="${repairman.id}">
+                <input type="submit" value="Создать заказ">
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div >
+
+</div>
+
+</body>
+</html>

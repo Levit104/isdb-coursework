@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновить профиль</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Обновить профиль</h1>
+
+    <form class="flex-form" th:method="PATCH" th:action="@{/clients/profile}" th:object="${client}">
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+            <input type="text" id="firstName" th:field="*{firstName}" placeholder="Имя" required>
+        </div>
+
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+            <input type="text" id="lastName" th:field="*{lastName}" placeholder="Фамилия" required>
+        </div>
+
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <input type="email" id="email" th:field="*{email}" placeholder="Эл. почта" required>
+        </div>
+
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('telNumber')}" th:errors="*{telNumber}"></div>
+            <input type="text" id="telNumber" th:field="*{telNumber}" placeholder="Номер телефона" required>
+        </div>
+
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+            <input type="text" id="address" th:field="*{address}" placeholder="Адрес" required>
+        </div>
+
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            <input type="text" id="username" th:field="*{username}" placeholder="Имя пользователя" required>
+        </div>
+
+        <div>
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <input type="password" id="password" th:field="*{password}" placeholder="Пароль" required>
+        </div>
+
+        <input type="submit" value="Сохранить изменения">
+    </form>
+</div>
+
+</body>
+</html>

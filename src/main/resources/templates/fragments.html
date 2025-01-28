@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="navigation-buttons" th:fragment="nav-bar-client">
+    <a th:href="@{/appliances}">Техника</a>
+    <a th:href="@{/orders}">Заказы</a>
+    <a th:href="@{/repairmen}">Мастера</a>
+    <a th:href="@{/subscriptions}">Подписки</a>
+    <a th:href="@{/clients/profile}">Профиль</a>
+    <a th:href="@{/logout}">Выход</a>
+</div>
+
+<div class="navigation-buttons" th:fragment="nav-bar-repairman">
+    <a th:href="@{/available-orders}">Заказы</a>
+    <a th:href="@{/schedule}">График</a>
+    <a th:href="@{/repairmen/profile}">Профиль</a>
+    <a th:href="@{/logout}">Выход</a>
+</div>
+
+</body>
+</html>

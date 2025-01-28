@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<th:block th:class="navigation-buttons" th:replace="fragments :: nav-bar-client"></th:block>
+
+<div class="main">
+    <h1>Профиль</h1>
+
+    <div class="main">
+        <p class="styled-input" th:text="${client.firstName + ' ' + client.lastName}"></p>
+        <p class="styled-input" th:text="${client.email}"></p>
+        <p class="styled-input" th:text="${client.telNumber}"></p>
+        <p class="styled-input" th:text="${client.username}"></p>
+        <p class="styled-input" th:text="${client.address}"></p>
+    </div>
+
+    <form th:method="GET" th:action="@{/clients/profile/edit}">
+        <input type="submit" value="Обновить профиль">
+    </form>
+
+<!--    <form th:method="DELETE" th:action="@{/clients/profile}">-->
+<!--        <input type="submit" value="Удалить профиль">-->
+<!--    </form>-->
+</div>
+
+</body>
+</html>

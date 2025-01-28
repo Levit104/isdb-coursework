@@ -1,49 +1,45 @@
 package levit104.isdb.coursework.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import levit104.isdb.coursework.validation.ErrorMessages;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-import static levit104.isdb.coursework.validation.ErrorMessages.INVALID_EMAIL;
-import static levit104.isdb.coursework.validation.ErrorMessages.NOT_BLANK;
-
-@MappedSuperclass
+@Entity
+@Table(name = "person")
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
-@ToString
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-//    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Column(nullable = false)
     private String firstName;
 
-//    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Column(nullable = false)
     private String lastName;
 
-//    @NotNull
-    @NotBlank(message = NOT_BLANK)
-    @Email(message = INVALID_EMAIL)
-    @Column(unique = true)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Email(message = ErrorMessages.INVALID_EMAIL)
+    @Column(nullable = false, unique = true)
     private String email;
 
-//    @NotNull
-    @NotBlank(message = NOT_BLANK)
-    @Column(unique = true)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Column(nullable = false, unique = true)
     private String telNumber;
 
-//    @NotNull
-    @NotBlank(message = NOT_BLANK)
-    @Column(unique = true)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Column(nullable = false, unique = true)
     private String username;
 
-//    @NotNull
-    @NotBlank(message = NOT_BLANK)
+    @NotBlank(message = ErrorMessages.EMPTY_VALUE)
+    @Column(nullable = false)
     private String password;
 
     private String role;
