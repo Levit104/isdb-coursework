@@ -47,9 +47,6 @@ public class Appliance {
 
     @Transient
     private MultipartFile image;
-
-    @Transient
-    private String preUpdateImageName;
 }
 
 
